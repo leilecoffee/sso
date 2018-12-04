@@ -21,4 +21,6 @@ public interface PermissionDao {
 	int update(Permission entity);
 
 	int delete(Long id);
+	
+	List<Permission> getPermissionByUserId(Long userId);
 }

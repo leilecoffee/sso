@@ -1,11 +1,5 @@
 /**
- * @file: cookie.
- * @intro: cookie存储类.
- * @author: zzmhot.
- * @email: zzmhot@163.com.
- * @Date: 2017/4/28 10:45.
- * @Copyright(©) 2017 by zzmhot.
- *
+ * cookie存储类
  */
 
 //存储前缀

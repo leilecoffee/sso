@@ -1,11 +1,5 @@
 /**
- * @file: tools_base64.
- * @intro: base64加密解密工具.
- * @author: zzmhot.
- * @email: zzmhot@163.com.
- * @Date: 2017/5/9 13:45.
- * @Copyright(©) 2017 by zzmhot.
- *
+ * base64加密解密工具.
  */
 
 //存储前缀

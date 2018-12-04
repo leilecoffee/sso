@@ -1,7 +1,6 @@
 package cn.mcsj.sso.service.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +16,6 @@ import cn.mcsj.sso.dao.RolePermissionDao;
 import cn.mcsj.sso.dao.UserRoleDao;
 import cn.mcsj.sso.dto.base.PageBean;
 import cn.mcsj.sso.entity.Permission;
-import cn.mcsj.sso.entity.RolePermission;
-import cn.mcsj.sso.entity.UserRole;
 import cn.mcsj.sso.service.IPermissionService;
 
 @Service
@@ -70,36 +67,8 @@ public class PermissionService implements IPermissionService {
 		return permissionDao.delete(primaryKey);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<Permission> getPermissionByUserId(Long userId) {
-		List<Permission> result = new ArrayList<Permission>();
-		Map whereMap = new HashMap();
-		// 获取用户与角色关系信息
-		whereMap.put("userId", userId);
-		List<UserRole> userRoles = userRoleDao.list(whereMap);
-		if (userRoles.size() < 1) {
-			return result;
-		}
-		List<Long> roleIds = new ArrayList<Long>();
-		for (UserRole ur : userRoles) {
-			roleIds.add(ur.getRoleId());
-		}
-		whereMap.clear();
-		// 获取角色与权限信息
-		whereMap.put("roleIds", roleIds);
-		List<RolePermission> rolePermissions = rolePermissionDao.list(whereMap);
-		if (rolePermissions.size() < 1) {
-			return result;
-		}
-		List<Long> permissionIds = new ArrayList<Long>();
-		for (RolePermission rp : rolePermissions) {
-			permissionIds.add(rp.getPermissionId());
-		}
-		whereMap.clear();
-		// 查询当前用户的权限菜单信息
-		whereMap.put("permissionIds", permissionIds);
-		result = permissionDao.list(whereMap);
-		return result;
+		return permissionDao.getPermissionByUserId(userId);
 	}
 }

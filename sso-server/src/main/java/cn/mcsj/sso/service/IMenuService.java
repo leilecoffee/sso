@@ -19,4 +19,6 @@ public interface IMenuService{
 	int save(Menu menu);
 
     int delete(Long primaryKey);
+    
+    List<Menu> getMenuByUserId(Long userId);
 }

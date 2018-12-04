@@ -60,4 +60,9 @@ public class MenuService implements IMenuService {
 	public int delete(Long primaryKey) {
 		return menuDao.delete(primaryKey);
 	}
+
+	@Override
+	public List<Menu> getMenuByUserId(Long userId) {
+		return menuDao.getMenuByUserId(userId);
+	}
 }

@@ -22,4 +22,6 @@ public interface MenuDao {
 	int update(Menu entity);
 
 	int delete(Long id);
+	
+	List<Menu> getMenuByUserId(Long userId);
 }

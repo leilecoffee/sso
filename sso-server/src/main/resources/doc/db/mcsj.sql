@@ -92,6 +92,7 @@ DROP TABLE IF EXISTS `t_menu`;
 CREATE TABLE `t_menu` (
   `menu_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(40) NOT NULL COMMENT '菜单',
+  `icon` varchar(120) NOT NULL COMMENT '图标',
   `parent_id` int(11) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
   `sort` tinyint(4) DEFAULT NULL,
