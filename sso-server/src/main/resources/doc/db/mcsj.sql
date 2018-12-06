@@ -21,12 +21,11 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增长',
-  `email` varchar(40) NOT NULL COMMENT '邮箱',
+  `username` varchar(40) NOT NULL COMMENT '用户名',
   `password` varchar(40) NOT NULL COMMENT '密码',
   `salt` varchar(40) NOT NULL COMMENT '盐值',
   `name` varchar(40) NOT NULL,
   `phone` varchar(11) NOT NULL,
-  `status` tinyint(4) NOT NULL COMMENT '0- 待审核,1-代表审核通过,2-代表审核不通过',
   `is_delete` tinyint(4) NOT NULL COMMENT '0-有效, 1-删除',
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`user_id`),

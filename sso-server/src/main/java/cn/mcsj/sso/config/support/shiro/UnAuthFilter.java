@@ -9,14 +9,13 @@ import org.apache.shiro.web.filter.AccessControlFilter;
 
 import com.alibaba.fastjson.JSONObject;
 
-import cn.mcsj.sso.constant.ApplicationEnum;
+import cn.mcsj.sso.constant.ResultCode;
 import cn.mcsj.sso.dto.base.ResultVO;
 
+
 /**
- * 
- * @Description: TODO(角色或权限改变控制类)
- * @author 黄明彪
- * @date 2018年6月21日 上午9:54:28
+ * 未认证拦截器
+ * @author admin
  *
  */
 public class UnAuthFilter extends AccessControlFilter {
@@ -33,7 +32,7 @@ public class UnAuthFilter extends AccessControlFilter {
 		if (!SecurityUtils.getSubject().isAuthenticated()) {
 			httpServletResponse.setCharacterEncoding("UTF-8");
 			httpServletResponse.setContentType("application/json");
-			httpServletResponse.getWriter().write(JSONObject.toJSON(new ResultVO(ApplicationEnum.UNLOGIN)).toString());
+			httpServletResponse.getWriter().write(JSONObject.toJSONString(new ResultVO(ResultCode.UNLOGIN)));
 			return false;
 		}
 		return true;

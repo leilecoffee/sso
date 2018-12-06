@@ -6,7 +6,7 @@
      
     <resultMap id="userResultMap" type="User">
 		<result property="userId" column="user_id" />
-		<result property="email" column="email" />
+		<result property="username" column="username" />
 		<result property="password" column="password" />
 		<result property="salt" column="salt" />
 		<result property="name" column="name" />
@@ -17,7 +17,7 @@
 	
 	<sql id="userColumns"> 
 			user_id,
-			email,
+			username,
 			password,
 			salt,
 			name,
@@ -30,7 +30,7 @@
 		<where>
 			1 = 1
 			<if test="userId != null and userId !=''">and user_id = #{userId}</if>
-			<if test="email != null and email !=''">and email = #{email}</if>
+			<if test="username != null and email !=''">and username = #{username}</if>
 			<if test="password != null and password !=''">and password = #{password}</if>
 			<if test="salt != null and salt !=''">and salt = #{salt}</if>
 			<if test="name != null and name !=''">and name = #{name}</if>
@@ -66,7 +66,7 @@
         )  
 		values(
         #{userId},
-        #{email},
+        #{username},
         #{password},
         #{salt},
         #{name},
@@ -79,8 +79,8 @@
     <update id="update" parameterType="User">
 		update t_user
 		<set>
-			<if test="email != null">
-				email = #{email},
+			<if test="username != null">
+				username = #{username},
 			</if>
 			<if test="password != null">
 				password = #{password},

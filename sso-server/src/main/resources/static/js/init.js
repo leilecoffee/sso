@@ -7,6 +7,7 @@ $(function() {
 		var index = $('#s1').val();
 		var reqInfo = data[index];
 		var param = JSON.parse($('#param').val());
+		var url = $('#url').val();
 		var headers = {
 			"content-type": 'application/json'
 		}
@@ -16,7 +17,7 @@ $(function() {
 		}
 		$.ajax({
 			type: reqInfo.method,
-			url: reqInfo.url,
+			url: url,
 			headers: headers,
 			data: JSON.stringify(param),
 			dataType: 'json',
@@ -29,6 +30,7 @@ $(function() {
 	$("#s1").change(function() {
 		var index = $('#s1').val();
 		$('#param').val(JSON.stringify(data[index].param));
+		$('#url').val(data[index].url);
 	});
 	//登录提交按钮
 	$('#loginBtn').bind("click", function() {

@@ -9,7 +9,7 @@ import org.apache.shiro.web.filter.AccessControlFilter;
 
 import com.alibaba.fastjson.JSON;
 
-import cn.mcsj.sso.constant.ApplicationEnum;
+import cn.mcsj.sso.constant.ResultCode;
 import cn.mcsj.sso.constant.GlobalConstant;
 import cn.mcsj.sso.dto.base.ResultVO;
 
@@ -40,7 +40,7 @@ public class ReLoginFilter extends AccessControlFilter {
 					subject.logout();
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter()
-							.print(JSON.toJSONString(new ResultVO(ApplicationEnum.ROLE_OR_PERMISSION_CHANGED)));
+							.print(JSON.toJSONString(new ResultVO(ResultCode.ROLE_OR_PERMISSION_CHANGED)));
 					response.flushBuffer();
 					response.getWriter().close();
 					return false;

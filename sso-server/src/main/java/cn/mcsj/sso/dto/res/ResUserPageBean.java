@@ -1,19 +1,10 @@
-package cn.mcsj.sso.entity;
+package cn.mcsj.sso.dto.res;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class User implements Serializable {
-
-	/**
-	 * 序列化
-	 */
-	private static final long serialVersionUID = 1L;
-
+public class ResUserPageBean {
 	private Long userId;
 	private String username;
-	private String password;
-	private String salt;
 	private String name;
 	private String phone;
 	private Integer isDelete;
@@ -27,36 +18,20 @@ public class User implements Serializable {
 		this.userId = userId;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getSalt() {
-		return salt;
-	}
-
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
-
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPhone() {
@@ -83,8 +58,4 @@ public class User implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public String getCredentialsSalt() {
-		// SecureRandomNumberGenerator
-		return this.username + this.salt;
-	}
 }

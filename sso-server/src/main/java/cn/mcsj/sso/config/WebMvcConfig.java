@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Profile({ "dev", "test" })
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
-
 	/**
 	 * 配置静态访问资源
 	 * @param registry
