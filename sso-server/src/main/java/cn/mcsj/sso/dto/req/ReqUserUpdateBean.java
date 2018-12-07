@@ -12,6 +12,8 @@ public class ReqUserUpdateBean {
 	private String name;
 	@NotBlank(message = "{user.phone.notBlank}")
 	private String phone;
+	@NotNull(message = "{user.isdelete.notNull}")
+	private Integer isDelete;
 
 	public Long getUserId() {
 		return userId;
@@ -35,6 +37,14 @@ public class ReqUserUpdateBean {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public Integer getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(Integer isDelete) {
+		this.isDelete = isDelete;
 	}
 
 }

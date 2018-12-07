@@ -1,8 +1,8 @@
 //导入模块
-import * as api_sso from './sso'
+import * as api from './api'
 
 const apiObj = {
-	api_sso
+	api
 }
 
 const install = function(Vue) {

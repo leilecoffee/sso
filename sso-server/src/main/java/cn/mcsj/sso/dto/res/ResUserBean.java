@@ -2,7 +2,7 @@ package cn.mcsj.sso.dto.res;
 
 import java.util.Date;
 
-public class ResUserPageBean {
+public class ResUserBean {
 	private Long userId;
 	private String username;
 	private String name;

@@ -73,12 +73,8 @@ export default {
         };
     },
     created() {
-        this.get_table_data();
     },
     methods: {
-			getMenu(){
-					
-			}
 		}
 };
 </script>

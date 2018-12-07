@@ -23,4 +23,6 @@ public interface IUserService {
 	ResultVO update(ReqUserUpdateBean userUpdateBean);
 
 	int delete(Long id);
+	
+	User getOne(Long userId);
 }

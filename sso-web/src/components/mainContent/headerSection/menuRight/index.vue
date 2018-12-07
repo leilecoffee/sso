@@ -8,10 +8,16 @@
           <span class="icon"></span>
         </div>
         <el-dropdown-menu slot="dropdown" class="dropdown-menu">
+					<el-dropdown-item class="dropdown-list">
+						<a href="javascript:" class="dropdown-btn" @click="userinfo()">
+							<i class="icon fa fa-user"></i>
+							<span>个人中心</span>
+						</a>
+					</el-dropdown-item>
           <el-dropdown-item class="dropdown-list">
             <a href="javascript:" class="dropdown-btn" @click="user_click(0)">
               <i class="icon fa fa-user"></i>
-              <span>个人信息</span>
+              <span>修改密码</span>
             </a>
           </el-dropdown-item>
           <el-dropdown-item class="dropdown-list">
@@ -21,7 +27,7 @@
             </a>
           </el-dropdown-item>
           <el-dropdown-item class="dropdown-list">
-            <a href="javascript:" class="dropdown-btn" @click="user_click(0)">
+            <a href="javascript:" class="dropdown-btn" @click="logout(0)">
               <i class="icon fa fa-sign-out"></i>
               <span>安全退出</span>
             </a>
@@ -51,13 +57,13 @@
         set_user_info: SET_USER_INFO
       }),
       //退出
-      user_out(){
+      logout(){
         this.$confirm('此操作将退出登录, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$fetch.api_user.logout()
+          this.$fetch.api.logout()
             .then(({msg}) => {
               this.$message.success(msg)
               this.set_user_info(null)
@@ -67,8 +73,8 @@
 
         })
       },
-      user_info() {
-        //个人信息
+      userinfo() {
+        this.$router.replace({name: "userInfo"});
       },
       user_setting() {
         //设置

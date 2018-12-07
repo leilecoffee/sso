@@ -6,9 +6,7 @@
 import axios from 'axios'
 import {port_code} from 'api/port_uri'
 import router from 'src/router'
-import {
-	Message
-} from 'element-ui'
+import {Message} from 'element-ui'
 import store from 'store'
 import {
 	SET_USER_INFO
@@ -40,32 +38,19 @@ export default function fetch(options) {
 		})
 		//请求处理
 		instance(options)
-			.then(({
-				data: {
-					code,
-					msg,
-					data
-				}
-			}) => {
+			.then(({data: {code,msg,data}}) => {
+				console.log(port_code);
 				//请求成功时,根据业务判断状态
 				if (code === port_code.success) {
-					resolve({
-						code,
-						msg,
-						data
-					})
-					return false
+					resolve({code,msg,data})
+					return;
 				} else if (code === port_code.unlogin) {
 					router.replace({
 						name: "login"
 					})
 				}
 				Message.warning(msg)
-				reject({
-					code,
-					msg,
-					data
-				})
+				reject({code,msg,data})
 			})
 			.catch((error) => {
 				//请求失败时,根据业务判断状态

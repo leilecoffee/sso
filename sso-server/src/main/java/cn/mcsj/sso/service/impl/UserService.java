@@ -161,8 +161,13 @@ public class UserService implements IUserService {
 		User user = userDao.getOne(userUpdateBean.getUserId());
 		user.setName(userUpdateBean.getName());
 		user.setPhone(userUpdateBean.getPhone());
+		user.setIsDelete(userUpdateBean.getIsDelete());
 		userDao.update(user);
 		return new ResultVO();
 	}
 
+	@Override
+	public User getOne(Long userId) {
+		return userDao.getOne(userId);
+	}
 }

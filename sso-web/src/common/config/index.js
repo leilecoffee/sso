@@ -7,4 +7,4 @@ export const storage_prefix = app_name + '_storage_'
 //base64加密前缀
 export const base64_prefix = app_name + '_base64_'
 //接入服务器接口地址根目录
-export const server_base_url = '/'
+export const server_base_url = '/pf'

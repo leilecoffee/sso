@@ -27,6 +27,8 @@ import homeComponent from 'pages/home'
 import noPageComponent from 'pages/error/404'
 //login
 import loginComponent from 'pages/user/login'
+
+import userInfoComponent from 'pages/user/info'
 //base table
 import baseTableComponent from 'pages/table/base'
 //sort table
@@ -61,6 +63,14 @@ const routes = [{
     component: homeComponent,
     meta: {
       title: "主页",
+      auth: true
+    }
+  },{
+    path: '/user/info',
+    name: 'userInfo',
+    component: userInfoComponent,
+    meta: {
+      title: "个人中心",
       auth: true
     }
   }, {

@@ -22,9 +22,10 @@ import cn.mcsj.sso.dto.base.ResultVO;
 import cn.mcsj.sso.dto.req.ReqUserPageBean;
 import cn.mcsj.sso.dto.req.ReqUserSaveBean;
 import cn.mcsj.sso.dto.req.ReqUserUpdateBean;
-import cn.mcsj.sso.dto.res.ResUserPageBean;
+import cn.mcsj.sso.dto.res.ResUserBean;
 import cn.mcsj.sso.entity.User;
 import cn.mcsj.sso.service.IUserService;
+import cn.mcsj.sso.util.ApplicationUtil;
 
 @RestController
 @RequestMapping("/user")
@@ -41,9 +42,9 @@ public class UserController {
 		PageBean page = new PageBean(pageNum, pageSize);
 		userService.page(page, new HashMap<>());
 		List<User> users = (List<User>) page.getRows();
-		List<ResUserPageBean> data = new ArrayList<ResUserPageBean>();
+		List<ResUserBean> data = new ArrayList<ResUserBean>();
 		for (User user : users) {
-			ResUserPageBean bean = new ResUserPageBean();
+			ResUserBean bean = new ResUserBean();
 			BeanUtils.copyProperties(user, bean);
 			data.add(bean);
 		}
@@ -67,5 +68,21 @@ public class UserController {
 	@PostMapping("/delete/{id}")
 	public ResultVO delete(@Validated @PathParam("id") Long id) {
 		return new ResultVO(ResultCode.SUCCESS);
+	}
+	
+	@PostMapping("/info")
+	public ResultVO userInfo() {
+		User user = ApplicationUtil.getCurrentUser();
+		User auser = userService.getOne(user.getUserId());
+		ResUserBean bean = new ResUserBean();
+		BeanUtils.copyProperties(auser, bean);
+		return new ResultVO(bean);
+	}
+	
+	@PostMapping("/modify")
+	public ResultVO modify(@Valid @RequestBody ReqUserUpdateBean userUpdateBean) {
+		User user = ApplicationUtil.getCurrentUser();
+		userUpdateBean.setUserId(user.getUserId());
+		return userService.update(userUpdateBean);
 	}
 }
