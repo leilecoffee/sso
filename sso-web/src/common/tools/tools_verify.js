@@ -25,4 +25,5 @@ export default new class Verify {
   isArray(value) {
     return Object.prototype.toString.call(value) === '[object Array]';
   }
+	
 }

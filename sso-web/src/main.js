@@ -47,8 +47,12 @@ Vue.config.productionTip = false
 //是否开启工具调试
 Vue.config.devtools = process.env.NODE_ENV === 'development'
 
+const  Bus = new Vue()
 new Vue({
   router,
   store,
-  ...App
+  ...App,
+	data:{
+		Bus
+	}
 }).$mount('mainbody')

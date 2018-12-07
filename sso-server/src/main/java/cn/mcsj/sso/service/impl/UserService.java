@@ -30,6 +30,7 @@ import cn.mcsj.sso.constant.ResultCode;
 import cn.mcsj.sso.dao.UserDao;
 import cn.mcsj.sso.dto.base.PageBean;
 import cn.mcsj.sso.dto.base.ResultVO;
+import cn.mcsj.sso.dto.req.ReqChangePwdBean;
 import cn.mcsj.sso.dto.req.ReqLoginBean;
 import cn.mcsj.sso.dto.req.ReqUserSaveBean;
 import cn.mcsj.sso.dto.req.ReqUserUpdateBean;
@@ -157,17 +158,33 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public ResultVO update(ReqUserUpdateBean userUpdateBean) {
+	public int update(ReqUserUpdateBean userUpdateBean) {
 		User user = userDao.getOne(userUpdateBean.getUserId());
 		user.setName(userUpdateBean.getName());
 		user.setPhone(userUpdateBean.getPhone());
 		user.setIsDelete(userUpdateBean.getIsDelete());
-		userDao.update(user);
-		return new ResultVO();
+		return userDao.update(user);
 	}
 
 	@Override
 	public User getOne(Long userId) {
 		return userDao.getOne(userId);
+	}
+
+	@Override
+	public ResultVO changePwd(ReqChangePwdBean changePwdBean) {
+		User user = ApplicationUtil.getCurrentUser();
+		User auser = getOne(user.getUserId());
+		SimpleHash hash = new SimpleHash(GlobalConstant.HASH_ALGORITHM_NAME, changePwdBean.getOldPwd(),
+				auser.getCredentialsSalt(), GlobalConstant.HASH_ITERATIONS);
+		if (!auser.getPassword().equals(hash.toHex())) {
+			return new ResultVO(ResultCode.PASSWORD_ERROR);
+		}
+		auser.setSalt((UUID.randomUUID().toString()).replaceAll("-", ""));
+		SimpleHash newHash = new SimpleHash(GlobalConstant.HASH_ALGORITHM_NAME, changePwdBean.getNewPwd(),
+				auser.getCredentialsSalt(), GlobalConstant.HASH_ITERATIONS);
+		auser.setPassword(newHash.toHex());
+		userDao.update(auser);
+		return new ResultVO();
 	}
 }

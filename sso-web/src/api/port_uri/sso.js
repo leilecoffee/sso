@@ -14,3 +14,4 @@ export const userinfo = "user/info"
 //个人中心修改
 export const usermodify = "user/modify"
 
+export const changepwd = "user/changepwd"

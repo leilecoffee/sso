@@ -29,6 +29,8 @@ import noPageComponent from 'pages/error/404'
 import loginComponent from 'pages/user/login'
 
 import userInfoComponent from 'pages/user/info'
+
+import changepwdComponent from 'pages/user/changepwd'
 //base table
 import baseTableComponent from 'pages/table/base'
 //sort table
@@ -69,6 +71,14 @@ const routes = [{
     path: '/user/info',
     name: 'userInfo',
     component: userInfoComponent,
+    meta: {
+      title: "个人中心",
+      auth: true
+    }
+  },{
+    path: '/user/changepwd',
+    name: 'changePwd',
+    component: changepwdComponent,
     meta: {
       title: "个人中心",
       auth: true

@@ -36,6 +36,9 @@
 
 <script type="text/javascript">
 import { panelTitle } from 'components';
+import {mapActions} from 'vuex'
+import {SET_USER_INFO} from 'store/actions/type'
+
 export default {
     data() {
         return {
@@ -65,6 +68,9 @@ export default {
         this.getUserInfo();
     },
     methods: {
+				...mapActions({
+					set_user_info: SET_USER_INFO
+				}),
         getUserInfo() {
 					this.load_data = true;
 					this.$fetch.api.userinfo().then(({ data }) => {
@@ -81,9 +87,19 @@ export default {
                     return false;
                 }
 								this.load_data = true;
-                this.$fetch.api.usermodify(this.userInfo).then(({ data }) => {
+                this.$fetch.api.usermodify(this.userInfo).then(({data}) => {
 										this.load_data = false;
+										//存储新的用户信息到cookie
+										this.set_user_info({
+											user: data,
+											login: true
+										});
 										this.getUserInfo();
+										this.$root.Bus.$emit("name",true);
+										this.$message({
+											message: '操作成功',
+											type: 'success'
+										});
 								}).catch(() => {
 										this.load_data = false;
 								});

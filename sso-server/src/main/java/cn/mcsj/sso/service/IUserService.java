@@ -4,6 +4,7 @@ import java.util.Map;
 
 import cn.mcsj.sso.dto.base.PageBean;
 import cn.mcsj.sso.dto.base.ResultVO;
+import cn.mcsj.sso.dto.req.ReqChangePwdBean;
 import cn.mcsj.sso.dto.req.ReqLoginBean;
 import cn.mcsj.sso.dto.req.ReqUserSaveBean;
 import cn.mcsj.sso.dto.req.ReqUserUpdateBean;
@@ -20,9 +21,11 @@ public interface IUserService {
 
 	ResultVO insert(ReqUserSaveBean userSaveBean);
 	
-	ResultVO update(ReqUserUpdateBean userUpdateBean);
+	int update(ReqUserUpdateBean userUpdateBean);
 
 	int delete(Long id);
 	
 	User getOne(Long userId);
+	
+	ResultVO changePwd(ReqChangePwdBean changePwdBean);
 }

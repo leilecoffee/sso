@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import cn.mcsj.sso.constant.ResultCode;
 import cn.mcsj.sso.dto.base.PageBean;
 import cn.mcsj.sso.dto.base.ResultVO;
+import cn.mcsj.sso.dto.req.ReqChangePwdBean;
 import cn.mcsj.sso.dto.req.ReqUserPageBean;
 import cn.mcsj.sso.dto.req.ReqUserSaveBean;
 import cn.mcsj.sso.dto.req.ReqUserUpdateBean;
+import cn.mcsj.sso.dto.res.ResLoginBean;
 import cn.mcsj.sso.dto.res.ResUserBean;
 import cn.mcsj.sso.entity.User;
 import cn.mcsj.sso.service.IUserService;
@@ -61,7 +63,8 @@ public class UserController {
 	@RequiresPermissions("sys:user:update")
 	@PostMapping("/update")
 	public ResultVO update(@Valid @RequestBody ReqUserUpdateBean userUpdateBean) {
-		return userService.update(userUpdateBean);
+		userService.update(userUpdateBean);
+		return new ResultVO();
 	}
 
 	@RequiresPermissions("sys:user:delete")
@@ -69,7 +72,7 @@ public class UserController {
 	public ResultVO delete(@Validated @PathParam("id") Long id) {
 		return new ResultVO(ResultCode.SUCCESS);
 	}
-	
+
 	@PostMapping("/info")
 	public ResultVO userInfo() {
 		User user = ApplicationUtil.getCurrentUser();
@@ -78,11 +81,19 @@ public class UserController {
 		BeanUtils.copyProperties(auser, bean);
 		return new ResultVO(bean);
 	}
-	
+
 	@PostMapping("/modify")
 	public ResultVO modify(@Valid @RequestBody ReqUserUpdateBean userUpdateBean) {
 		User user = ApplicationUtil.getCurrentUser();
 		userUpdateBean.setUserId(user.getUserId());
-		return userService.update(userUpdateBean);
+		userService.update(userUpdateBean);
+		ResLoginBean data = new ResLoginBean();
+		data.setName(userUpdateBean.getName());
+		return new ResultVO(data);
+	}
+
+	@PostMapping("/changepwd")
+	public ResultVO changePwd(@Valid @RequestBody ReqChangePwdBean changePwdBean) {
+		return userService.changePwd(changePwdBean);
 	}
 }
