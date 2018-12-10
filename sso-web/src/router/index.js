@@ -80,7 +80,7 @@ const routes = [{
     name: 'changePwd',
     component: changepwdComponent,
     meta: {
-      title: "个人中心",
+      title: "修改密码",
       auth: true
     }
   }, {
