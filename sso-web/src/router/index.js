@@ -32,6 +32,8 @@ import userInfoComponent from 'pages/user/info'
 
 import changepwdComponent from 'pages/user/changepwd'
 //base table
+import publishComponent from 'pages/info/publish'
+//base table
 import baseTableComponent from 'pages/table/base'
 //sort table
 import sortTableComponent from 'pages/table/sort'
@@ -52,7 +54,7 @@ const routes = [{
   path: '*',
   redirect: '/404'
 }, {
-  path: '/user/login',
+  path: '/login',
   name: 'login',
   component: loginComponent
 }, {
@@ -92,6 +94,14 @@ const routes = [{
       auth: true
     }
   }, {
+    path: '/info/publish',
+    name: 'infoPublish',
+    component: publishComponent,
+    meta: {
+      title: "信息发布",
+      auth: true
+    }
+  },{
     path: '/table/sort',
     name: 'tableSort',
     component: sortTableComponent,

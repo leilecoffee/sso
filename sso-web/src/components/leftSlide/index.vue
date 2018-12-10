@@ -44,27 +44,67 @@ export default {
                     icon: 'fa-home'
                 },
                 {
-                    title: '表格管理',
+                    title: '信息管理',
                     path: '/table',
                     icon: 'fa-table',
                     child: [
                         {
-                            title: '基本表格',
+                            title: '信息发布',
+                            path: '/info/publish'
+                        },
+                        {
+                            title: '信息查询',
+                            path: '/table/sort'
+                        },
+												{
+														title: '阅读日志',
+														path: '/table/sort'
+												},
+												{
+														title: '上链日志',
+														path: '/table/sort'
+												}
+                    ]
+                },{
+                    title: '授权管理',
+                    path: '/perm',
+                    icon: 'fa-table',
+                    child: [
+												{
+														title: '授权处理',
+														path: '/table/base'
+												},
+                        {
+                            title: '权限查询',
+                            path: '/table/base'
+                        }
+                    ]
+                },{
+                    title: '阅读管理',
+                    path: '/read',
+                    icon: 'fa-table',
+                    child: [
+												{
+														title: '发布者名单',
+														path: '/table/base'
+												},
+                        {
+                            title: '上链信息',
                             path: '/table/base'
                         },
                         {
-                            title: '排序表格',
-                            path: '/table/sort'
+                            title: '阅读日志',
+                            path: '/table/base'
                         }
                     ]
                 },
                 {
-                    title: '图表管理',
+                    title: '统计管理',
                     path: '/charts',
                     icon: 'fa-bar-chart-o',
                     child: [
                         {
-                            title: '柱状图表',
+                            title: '统计',
                             path: '/charts/bar'
                         }
                     ]
