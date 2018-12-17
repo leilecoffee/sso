@@ -8,16 +8,25 @@
 				<el-col :span="8">
 					<el-form ref="infoForm" :model="infoForm" :rules="rules" label-width="100px">
 						<el-form-item label="公司代码" prop="companyCode" >
-							<el-input v-model="infoForm.username" disabled></el-input>
+							<el-input v-model="infoForm.companyCode" disabled></el-input>
 						</el-form-item>
 						<el-form-item label="公司名称" prop="companyName">
-							<el-input v-model="infoForm.username" ></el-input>
+							<el-input v-model="infoForm.companyName" disabled></el-input>
+						</el-form-item>
+						<el-form-item label="产品名称" prop="productName">
+							<el-autocomplete
+								  v-model="name"
+								  :fetch-suggestions="queryProductAsync"
+								  placeholder="请输入内容"
+								  @select="handleSelect"
+									clearable
+								></el-autocomplete>
 						</el-form-item>
 						<el-form-item label="产品代码" prop="productCode" >
 							<el-input v-model="infoForm.productCode" disabled></el-input>
 						</el-form-item>
-						<el-form-item label="产品名称" prop="productName">
-							<el-input v-model="infoForm.productName"></el-input>
+						<el-form-item label="产品类型" prop="productType">
+							<el-input v-model="infoForm.productType" disabled></el-input>
 						</el-form-item>
 						<el-form-item label="价格" prop="productPrice">
 							<template>
@@ -25,13 +34,11 @@
 							</template>
 						</el-form-item>
 						<el-form-item label="价格日期" prop="priceDate">
-							<el-input v-model="infoForm.priceDate"></el-input>
-						</el-form-item>
-						<el-form-item label="产品类型" prop="productType">
-							<el-select v-model="infoForm.productType" clearable  placeholder="请选择产品类型">
-							  <el-option label="区域一" value="shanghai"></el-option>
-							  <el-option label="区域二" value="beijing"></el-option>
-							</el-select>
+							<el-date-picker
+								v-model="infoForm.priceDate"
+								type="date"
+								placeholder="选择日期">
+							</el-date-picker>
 						</el-form-item>
 						<el-form-item label="产品描述" prop="productDesc">
 							<el-input type="textarea" :rows="2" v-model="infoForm.productDesc"></el-input>
@@ -49,59 +56,112 @@
 </template>
 
 <script>
-	import { panelTitle } from 'components';
-	export default {
-		data() {
-			return {
-				infoForm:{
-					productPrice:'0',
-					productType:''
+import { panelTitle } from 'components';
+import {tools_date} from 'common/tools'
+export default {
+    data() {
+        return {
+            load_data: false,
+            name: '',
+            timeout: null,
+            infoForm: {
+                companyId: '',
+                companyCode: '',
+                companyName: '',
+                productCode: '',
+                productName: '',
+                productPrice: '0',
+                priceDate: '',
+                productType: ''
+            },
+            rules: {
+                companyCode: [{ required: true, message: '请输入公司代码', trigger: 'blur' }],
+                companyName: [{ required: true, message: '请输入公司名称', trigger: 'blur' }],
+                productCode: [{ required: true, message: '请输入产品代码', trigger: 'blur' }],
+                productName: [{ required: true, message: '请输入产品名称', trigger: 'blur' }],
+                productPrice: [{ required: true, message: '请输入价格', trigger: 'blur' }],
+                priceDate: [{ required: true,type:'date', message: '请输入价格日期', trigger: 'blur' },],
+                productType: [{ required: true, message: '请输入产品类型', trigger: 'blur' }],
+                productDesc: [{ required: true, message: '请输入产品描述', trigger: 'blur' }]
+            }
+        };
+    },
+    created() {
+        this.companyUserGet();
+				this.infoForm.priceDate  = tools_date.formatDateToString(new Date(),"YYYY-MM-DD");
+    },
+    methods: {
+        //获取登录用户的公司信息
+        companyUserGet() {
+            this.$fetch.api
+                .companyUserGet()
+                .then(({ data }) => {
+                    this.load_data = false;
+                    if (data) {
+                        this.infoForm.companyId = data.companyId;
+                        this.infoForm.companyCode = data.code;
+                        this.infoForm.companyName = data.name;
+                    }
+                })
+                .catch(() => {
+                    this.load_data = false;
+                });
+        },
+        queryProductAsync(queryString, cb) {
+						this.$fetch.api.productList({filter:queryString}).then(({ data }) => {
+										if (data) {
+												let result = [];
+												for (let item of data) {
+														result.push({
+																value: item.name,
+																productCode: item.code,
+																productDesc: item.description,
+																productId: item.productId,
+																productTypeId: item.productTypeId
+														});
+												}
+												cb(result);
+										}
+						}).catch(() => {
+						});
+        },
+        handleSelect(item) {
+						this.infoForm.productName = item.value;
+            this.infoForm.productId = item.productId;
+            this.infoForm.productCode = item.productCode;
+						this.infoForm.productDesc = item.productDesc;
+						this.loadProductType(item.productTypeId)
+        },
+        //获取产品类型
+        loadProductType(productTypeId) {
+            this.$fetch.api.productTypeGet({"productTypeId":productTypeId}).then(({ data }) => {
+								this.load_data = false;
+								if (data) {
+										this.infoForm.productType = data.name;
+								}
+						}).catch(() => {
+								this.load_data = false;
+						});
+        },
+        submitForm() {
+					let param = {"productId":this.infoForm.productId,"price":this.infoForm.productPrice,"priceDate":this.infoForm.priceDate}
+					this.$fetch.api.quotedSave(param).then(({ data }) => {
+							this.load_data = false;
+							this.$message.success("保存成功");
+							//刷新页签
+					}).catch(() => {
+							this.load_data = false;
+					});
 				},
-				rules:{
-					companyCode: [
-						 { required: true, message: '请输入公司代码', trigger: 'blur' }
-					],
-					companyName: [
-						{ required: true, message: '请输入公司代码', trigger: 'blur' }
-					],
-					productCode: [
-						{ required: true, message: '请输入公司代码', trigger: 'blur' }
-					],
-					productName: [
-						{ required: true, message: '请输入公司代码', trigger: 'blur' }
-					],
-					productPrice: [
-						{ required: true, message: '请输入公司代码', trigger: 'blur' }
-					], 
-					priceDate: [
-						{ required: true, message: '请输入公司代码', trigger: 'blur' }
-					],
-					productType: [
-						{ required: true, message: '请输入公司代码', trigger: 'blur' }
-					],
-					productDesc: [
-						{ required: true, message: '请输入公司代码', trigger: 'blur' }
-					]
-				}
-			};
-		},
-		created() {
-			
-		},
-		methods: {
-			submitForm(){
-				
-			},
-			resetForm(){
-				this.$refs['infoForm'].resetFields();
-			}
-		},
-		components: {
-				panelTitle
-		}
-	}
+        resetForm() {
+            this.$refs['infoForm'].resetFields();
+        }
+    },
+    components: {
+        panelTitle
+    }
+};
 </script>
 
 <style>
-
 </style>

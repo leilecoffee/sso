@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="cn.mcsj.sso.dao.ProductDao">  
+     
+    <resultMap id="productResultMap" type="Product">
+		<result property="productId" column="product_id" />
+		<result property="name" column="name" />
+		<result property="code" column="code" />
+		<result property="description" column="description" />
+		<result property="productTypeId" column="product_type_id" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+	
+	<sql id="productColumns"> 
+			product_id,
+			name,
+			code,
+			description,
+			product_type_id,
+			create_time
+	</sql>
+	
+	<sql id="query_Product_where">
+		<where>
+			1 = 1
+			<if test="productId != null and productId !=''">and product_id = #{productId}</if>
+			<if test="name != null and name !=''">and name = #{name}</if>
+			<if test="likeName != null and likeName !=''">and name like concat('%',#{likeName},'%');</if>
+			<if test="code != null and code !=''">and code = #{code}</if>
+			<if test="description != null and desc !=''">and description = #{description}</if>
+			<if test="productTypeId != null and productTypeId !=''">and product_type_id = #{productTypeId}</if>
+			<if test="createTime != null and createTime !=''">and create_time = #{createTime}</if>
+		</where>
+	</sql>
+	
+	<select id="getOne" parameterType="long" resultMap="productResultMap">
+		select
+		<include refid="productColumns" />
+		from t_product
+		where product_id = #{productId}
+	</select>
+	
+	<select id="list" parameterType="java.util.Map" resultMap="productResultMap">
+		select
+		<include refid="productColumns" />
+		from t_product
+		<include refid="query_Product_where" />
+		<if test="_start != null and _pageSize != null">limit #{_start},#{_pageSize}</if>
+	</select>
+	
+    <select id="total" parameterType="java.util.Map" resultType="int">
+		select count(1) from t_product
+		<include refid="query_Product_where" />
+	</select>
+    
+    <insert id="insert" parameterType="Product" useGeneratedKeys="true" keyProperty="productId">  
+        insert into t_product(
+        <include refid="productColumns" />
+        )  
+		values(
+        #{productId},
+        #{name},
+        #{code},
+        #{description},
+        #{productTypeId},
+        #{createTime}
+		)
+    </insert>  
+      
+    <update id="update" parameterType="Product">
+		update t_product
+		<set>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="code != null">
+				code = #{code},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+			<if test="productTypeId != null">
+				product_type_id = #{productTypeId},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+		</set>
+		where product_id = #{productId}
+	</update>
+
+	<delete id="delete" parameterType="long">
+		delete from t_product where
+		product_id = #{productId}
+	</delete>
+      
+</mapper>  

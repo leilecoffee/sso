@@ -39,7 +39,6 @@ export default function fetch(options) {
 		//请求处理
 		instance(options)
 			.then(({data: {code,msg,data}}) => {
-				debugger
 				//请求成功时,根据业务判断状态
 				if (code === port_code.success) {
 					resolve({code,msg,data})
@@ -52,8 +51,7 @@ export default function fetch(options) {
 				}
 				Message.warning(msg)
 				reject({code,msg,data})
-			})
-			.catch((error) => {
+			}).catch((error) => {
 				//请求失败时,根据业务判断状态
 				if (error.response) {
 					let resError = error.response

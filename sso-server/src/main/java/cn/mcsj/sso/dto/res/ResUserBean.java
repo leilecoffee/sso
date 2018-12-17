@@ -9,6 +9,7 @@ public class ResUserBean {
 	private String phone;
 	private Integer isDelete;
 	private Date createTime;
+	private String companyName;
 
 	public Long getUserId() {
 		return userId;
@@ -56,6 +57,14 @@ public class ResUserBean {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
 }

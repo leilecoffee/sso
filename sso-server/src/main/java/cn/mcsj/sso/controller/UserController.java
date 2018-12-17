@@ -25,7 +25,9 @@ import cn.mcsj.sso.dto.req.ReqUserSaveBean;
 import cn.mcsj.sso.dto.req.ReqUserUpdateBean;
 import cn.mcsj.sso.dto.res.ResLoginBean;
 import cn.mcsj.sso.dto.res.ResUserBean;
+import cn.mcsj.sso.entity.Company;
 import cn.mcsj.sso.entity.User;
+import cn.mcsj.sso.service.ICompanyService;
 import cn.mcsj.sso.service.IUserService;
 import cn.mcsj.sso.util.ApplicationUtil;
 
@@ -34,6 +36,8 @@ import cn.mcsj.sso.util.ApplicationUtil;
 public class UserController {
 	@Autowired
 	private IUserService userService;
+	@Autowired
+	private ICompanyService companyService;
 
 	@SuppressWarnings("unchecked")
 	@RequiresPermissions("sys:user:list")
@@ -79,6 +83,10 @@ public class UserController {
 		User auser = userService.getOne(user.getUserId());
 		ResUserBean bean = new ResUserBean();
 		BeanUtils.copyProperties(auser, bean);
+		if (auser.getCompanyId() != null) {
+			Company company = companyService.getOne(auser.getCompanyId());
+			bean.setCompanyName(company.getName());
+		}
 		return new ResultVO(bean);
 	}
 

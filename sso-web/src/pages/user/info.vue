@@ -10,12 +10,16 @@
 						<el-form-item label="用户名" >
 							<el-input v-model="userInfo.username" disabled></el-input>
 						</el-form-item>
+						<el-form-item label="所属公司" >
+							<el-input v-model="userInfo.companyName" disabled></el-input>
+						</el-form-item>
 						<el-form-item label="姓名" prop="name">
 							<el-input v-model="userInfo.name"></el-input>
 						</el-form-item>
 						<el-form-item label="手机号" prop="phone">
 							<el-input v-model="userInfo.phone"></el-input>
 						</el-form-item>
+						
 						<el-form-item label="状态">
 								  <el-radio-group v-model="userInfo.isDelete">
 										<el-radio :label="0">正常</el-radio>

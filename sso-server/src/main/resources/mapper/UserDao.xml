@@ -11,6 +11,7 @@
 		<result property="salt" column="salt" />
 		<result property="name" column="name" />
 		<result property="phone" column="phone" />
+		<result property="companyId" column="company_id" />
 		<result property="isDelete" column="is_delete" />
 		<result property="createTime" column="create_time" />
 	</resultMap>
@@ -22,6 +23,7 @@
 			salt,
 			name,
 			phone,
+			company_id,
 			is_delete,
 			create_time
 	</sql>
@@ -35,6 +37,7 @@
 			<if test="salt != null and salt !=''">and salt = #{salt}</if>
 			<if test="name != null and name !=''">and name = #{name}</if>
 			<if test="phone != null and phone !=''">and phone = #{phone}</if>
+			<if test="companyId != null and companyId !=''">and company_id = #{companyId}</if>
 			<if test="isDelete != null and isDelete !=''">and is_delete = #{isDelete}</if>
 			<if test="createTime != null and createTime !=''">and create_time = #{createTime}</if>
 		</where>
@@ -71,6 +74,7 @@
         #{salt},
         #{name},
         #{phone},
+        #{companyId},
         #{isDelete},
         #{createTime}
 		)
@@ -93,6 +97,9 @@
 			</if>
 			<if test="phone != null">
 				phone = #{phone},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId},
 			</if>
 			<if test="isDelete != null">
 				is_delete = #{isDelete},

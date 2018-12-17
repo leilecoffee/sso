@@ -16,6 +16,7 @@ public class User implements Serializable {
 	private String salt;
 	private String name;
 	private String phone;
+	private Long companyId;
 	private Integer isDelete;
 	private Date createTime;
 
@@ -69,6 +70,14 @@ public class User implements Serializable {
 
 	public Integer getIsDelete() {
 		return isDelete;
+	}
+
+	public Long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
 	}
 
 	public void setIsDelete(Integer isDelete) {

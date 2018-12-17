@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2018-12-10 16:22:49
+Date: 2018-12-17 18:50:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,11 +25,13 @@ CREATE TABLE `t_company` (
   `name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`company_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_company
 -- ----------------------------
+INSERT INTO `t_company` VALUES ('1', '91440300MA5EUCXT22', '金荣中国金融业有限公司', '2018-12-17 14:45:54');
+INSERT INTO `t_company` VALUES ('2', '91440300321697996H', '深圳前海金道贵金属有限公司', null);
 
 -- ----------------------------
 -- Table structure for t_menu
@@ -69,6 +71,25 @@ CREATE TABLE `t_permission` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for t_product
+-- ----------------------------
+DROP TABLE IF EXISTS `t_product`;
+CREATE TABLE `t_product` (
+  `product_id` int(11) NOT NULL,
+  `name` varchar(120) DEFAULT NULL,
+  `code` varchar(120) DEFAULT NULL,
+  `description` text CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `product_type_id` int(11) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_product
+-- ----------------------------
+INSERT INTO `t_product` VALUES ('1', '成色不低于99.95％黄金', 'AUX.CNY', '经交易所认定的可提供标准金锭、金条企业生产的符合交易所金锭SGEB1-2002、金条SGEB2-2004质量标准的实物，及伦敦金银市场协会（LBMA）认定的合格供货商生产的标准实物。', '1', '2018-12-17 18:22:42');
+
+-- ----------------------------
 -- Table structure for t_product_type
 -- ----------------------------
 DROP TABLE IF EXISTS `t_product_type`;
@@ -82,7 +103,7 @@ CREATE TABLE `t_product_type` (
 -- ----------------------------
 -- Records of t_product_type
 -- ----------------------------
-INSERT INTO `t_product_type` VALUES ('1', '股票', '2018-12-10 15:27:21');
+INSERT INTO `t_product_type` VALUES ('1', '贵金属', '2018-12-17 14:57:06');
 
 -- ----------------------------
 -- Table structure for t_product_type_permission
@@ -106,18 +127,23 @@ INSERT INTO `t_product_type_permission` VALUES ('1', '1', null, '2018-12-10 15:2
 -- ----------------------------
 DROP TABLE IF EXISTS `t_quoted`;
 CREATE TABLE `t_quoted` (
-  `id` int(255) DEFAULT NULL,
-  `company_id` varchar(255) DEFAULT NULL,
-  `product_id` varchar(255) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `price_date` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `product_type_id` int(11) DEFAULT NULL,
-  `product_desc` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_quoted
 -- ----------------------------
+INSERT INTO `t_quoted` VALUES ('1', '1', '1', '0.40', '2018-12-17 00:00:00');
+INSERT INTO `t_quoted` VALUES ('2', '1', '1', '10.23', '2018-12-17 00:00:00');
+INSERT INTO `t_quoted` VALUES ('3', '1', '1', '0.30', '2018-12-17 00:00:00');
+INSERT INTO `t_quoted` VALUES ('4', '1', '1', '0.50', '2018-12-17 00:00:00');
+INSERT INTO `t_quoted` VALUES ('5', '1', '1', '0.30', '2018-12-17 00:00:00');
+INSERT INTO `t_quoted` VALUES ('6', '1', '1', '0.20', '2018-12-17 00:00:00');
 
 -- ----------------------------
 -- Table structure for t_read_log
@@ -213,16 +239,19 @@ CREATE TABLE `t_user` (
   `salt` varchar(40) NOT NULL COMMENT '盐值',
   `name` varchar(40) NOT NULL,
   `phone` varchar(11) NOT NULL,
+  `company_id` int(11) DEFAULT NULL,
   `is_delete` tinyint(4) NOT NULL COMMENT '0-有效, 1-删除',
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `Idx_email` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', '1056196129@qq.com', '1949c7f6e2127bb1ce52a14516b38f25a4e41731', 'ca42e099bf6c45b990a4a323cc82eb24', '张磊', '15989305930', '0', '2018-12-03 15:47:50');
+INSERT INTO `t_user` VALUES ('1', '1056196129@qq.com', '1949c7f6e2127bb1ce52a14516b38f25a4e41731', 'ca42e099bf6c45b990a4a323cc82eb24', '张磊', '15989305930', null, '0', '2018-12-03 15:47:50');
+INSERT INTO `t_user` VALUES ('2', 'jrzg', '38312cb5b3ee862eba514f7ebc97f82ca16df3f4', 'ffb737f746414aaebe28c8f54ed61047', '金荣', '13678945621', '1', '0', '2018-12-17 15:10:02');
+INSERT INTO `t_user` VALUES ('3', 'jdgjs', 'f4bd672cf8c19fc4438597f19a046fa979431a47', '056e91b485934d728c139a444bab8691', '金道', '13578954635', '2', '0', '2018-12-17 15:10:56');
 
 -- ----------------------------
 -- Table structure for t_user_product_type_permission

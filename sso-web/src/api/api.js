@@ -2,7 +2,9 @@
  *  用户请求数据配置.
  */
 import fetch from 'common/fetch'
-import {port_sso} from 'api/port_uri/index'
+import {
+	port_sso
+} from 'api/port_uri/index'
 
 //登录
 export function login(data) {
@@ -41,6 +43,40 @@ export function usermodify(data) {
 export function changepwd(data) {
 	return fetch({
 		url: port_sso.changepwd,
+		method: 'post',
+		data
+	})
+}
+//获取登录用户的公司信息
+export function companyUserGet() {
+	return fetch({
+		url: port_sso.companyUserGet,
+		method: 'post'
+	})
+}
+
+//获取产品列表
+export function productList(data) {
+	return fetch({
+		url: port_sso.productList,
+		method: 'post',
+		data
+	})
+}
+
+//获取产品类别信息
+export function productTypeGet(data){
+	return fetch({
+		url: port_sso.productTypeGet,
+		method: 'post',
+		data
+	})
+}
+
+//报价信息保存
+export function quotedSave(data){
+	return fetch({
+		url: port_sso.quotedSave,
 		method: 'post',
 		data
 	})

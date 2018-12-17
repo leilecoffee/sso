@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="cn.mcsj.sso.dao.ReadLogDao">  
+     
+    <resultMap id="readLogResultMap" type="ReadLog">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="productTypeId" column="product_type_id" />
+		<result property="productInfoId" column="product_info_id" />
+		<result property="fromCompanyId" column="from_company_id" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+	
+	<sql id="readLogColumns"> 
+			id,
+			user_id,
+			product_type_id,
+			product_info_id,
+			from_company_id,
+			create_time
+	</sql>
+	
+	<sql id="query_ReadLog_where">
+		<where>
+			1 = 1
+			<if test="id != null and id !=''">and id = #{id}</if>
+			<if test="userId != null and userId !=''">and user_id = #{userId}</if>
+			<if test="productTypeId != null and productTypeId !=''">and product_type_id = #{productTypeId}</if>
+			<if test="productInfoId != null and productInfoId !=''">and product_info_id = #{productInfoId}</if>
+			<if test="fromCompanyId != null and fromCompanyId !=''">and from_company_id = #{fromCompanyId}</if>
+			<if test="createTime != null and createTime !=''">and create_time = #{createTime}</if>
+		</where>
+	</sql>
+	
+	<select id="getOne" parameterType="long" resultMap="readLogResultMap">
+		select
+		<include refid="readLogColumns" />
+		from t_read_log
+		where id = #{id}
+	</select>
+	
+	<select id="list" parameterType="java.util.Map" resultMap="readLogResultMap">
+		select
+		<include refid="readLogColumns" />
+		from t_read_log
+		<include refid="query_ReadLog_where" />
+		<if test="_start != null and _pageSize != null">limit #{_start},#{_pageSize}</if>
+	</select>
+	
+    <select id="total" parameterType="java.util.Map" resultType="int">
+		select count(1) from t_read_log
+		<include refid="query_ReadLog_where" />
+	</select>
+    
+    <insert id="insert" parameterType="ReadLog" useGeneratedKeys="true" keyProperty="id">  
+        insert into t_read_log(
+        <include refid="readLogColumns" />
+        )  
+		values(
+        #{id},
+        #{userId},
+        #{productTypeId},
+        #{productInfoId},
+        #{fromCompanyId},
+        #{createTime}
+		)
+    </insert>  
+      
+    <update id="update" parameterType="ReadLog">
+		update t_read_log
+		<set>
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>
+			<if test="productTypeId != null">
+				product_type_id = #{productTypeId},
+			</if>
+			<if test="productInfoId != null">
+				product_info_id = #{productInfoId},
+			</if>
+			<if test="fromCompanyId != null">
+				from_company_id = #{fromCompanyId},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="long">
+		delete from t_read_log where
+		id = #{id}
+	</delete>
+      
+</mapper>  

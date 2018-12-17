@@ -13,5 +13,13 @@ export const permcode = "sys/permcode"
 export const userinfo = "user/info"
 //个人中心修改
 export const usermodify = "user/modify"
-
+//修改密码
 export const changepwd = "user/changepwd"
+//获取登录用户的公司信息
+export const companyUserGet = "company/user/get"
+//获取产品列表
+export const productList = "product/list"
+//获取产品类型
+export const productTypeGet = "productType/get"
+
+export const quotedSave = "quoted/save"

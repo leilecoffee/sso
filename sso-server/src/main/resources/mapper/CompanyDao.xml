@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="cn.mcsj.sso.dao.CompanyDao">  
+     
+    <resultMap id="companyResultMap" type="Company">
+		<result property="companyId" column="company_id" />
+		<result property="code" column="code" />
+		<result property="name" column="name" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+	
+	<sql id="companyColumns"> 
+			company_id,
+			code,
+			name,
+			create_time
+	</sql>
+	
+	<sql id="query_Company_where">
+		<where>
+			1 = 1
+			<if test="companyId != null and companyId !=''">and company_id = #{companyId}</if>
+			<if test="code != null and code !=''">and code = #{code}</if>
+			<if test="name != null and name !=''">and name = #{name}</if>
+			<if test="createTime != null and createTime !=''">and create_time = #{createTime}</if>
+		</where>
+	</sql>
+	
+	<select id="getOne" parameterType="long" resultMap="companyResultMap">
+		select
+		<include refid="companyColumns" />
+		from t_company
+		where company_id = #{companyId}
+	</select>
+	
+	<select id="list" parameterType="java.util.Map" resultMap="companyResultMap">
+		select
+		<include refid="companyColumns" />
+		from t_company
+		<include refid="query_Company_where" />
+		<if test="_start != null and _pageSize != null">limit #{_start},#{_pageSize}</if>
+	</select>
+	
+    <select id="total" parameterType="java.util.Map" resultType="int">
+		select count(1) from t_company
+		<include refid="query_Company_where" />
+	</select>
+    
+    <insert id="insert" parameterType="Company" useGeneratedKeys="true" keyProperty="companyId">  
+        insert into t_company(
+        <include refid="companyColumns" />
+        )  
+		values(
+        #{companyId},
+        #{code},
+        #{name},
+        #{createTime}
+		)
+    </insert>  
+      
+    <update id="update" parameterType="Company">
+		update t_company
+		<set>
+			<if test="code != null">
+				code = #{code},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+		</set>
+		where company_id = #{companyId}
+	</update>
+
+	<delete id="delete" parameterType="long">
+		delete from t_company where
+		company_id = #{companyId}
+	</delete>
+      
+</mapper>  

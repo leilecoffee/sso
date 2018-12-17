@@ -72,7 +72,7 @@ const routes = [{
   },{
     path: '/user/info',
     name: 'userInfo',
-    component: userInfoComponent,
+    component: resolve => require(['pages/user/info'], resolve),
     meta: {
       title: "个人中心",
       auth: true
@@ -80,7 +80,7 @@ const routes = [{
   },{
     path: '/user/changepwd',
     name: 'changePwd',
-    component: changepwdComponent,
+    component: resolve => require(['pages/user/changepwd'], resolve),
     meta: {
       title: "修改密码",
       auth: true
@@ -96,7 +96,15 @@ const routes = [{
   }, {
     path: '/info/publish',
     name: 'infoPublish',
-    component: publishComponent,
+    component: resolve => require(['pages/info/publish'], resolve),
+    meta: {
+      title: "信息发布",
+      auth: true
+    }
+  },{
+    path: '/info/query',
+    name: 'infoQuery',
+    component: resolve => require(['pages/info/query'], resolve),
     meta: {
       title: "信息发布",
       auth: true
