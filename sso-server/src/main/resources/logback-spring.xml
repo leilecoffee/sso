@@ -35,7 +35,7 @@
     <logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" />  
     
     <!--sql log configure--> 
-    <logger name="cn.szt.bcpf.dao" level="DEBUG"></logger>
+    <logger name="cn.mcsj.sso.dao" level="DEBUG"></logger>
     <!-- 日志输出级别 -->
     <root level="INFO">
         <appender-ref ref="STDOUT" />

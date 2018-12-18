@@ -10,7 +10,8 @@ public enum ResultCode {
 	USERNAME_EXIST(4005, "用户名重复"),
 	UNLOGIN(4006, "未登录"),
 	LOGOUT(4007, "注销成功"),
-	ROLE_OR_PERMISSION_CHANGED(4005, "用户角色或权限发生改变,请重新登录!"),
+	ROLE_OR_PERMISSION_CHANGED(4008, "用户角色或权限发生改变,请重新登录!"),
+	USER_INFO_PERM_EXIST(4009, "公司权限信息已存在!"),
 	PASSWORD_ERROR(4009, "原始密码错误");
 	private int code;
 

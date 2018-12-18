@@ -35,3 +35,5 @@ export const companyOptions = "company/options"
 export const infoPermList = "infoPerm/list"
 
 export const userInfoPermSave="userInfoPerm/save"
+
+export const userInfoPermDelete ="userInfoPerm/delete"

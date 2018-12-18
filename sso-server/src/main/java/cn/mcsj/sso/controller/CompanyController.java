@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,7 +44,7 @@ public class CompanyController {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping("/options/{name}")
-	public ResultVO getCompanyOptions(@PathParam("name") String name) {
+	public ResultVO getCompanyOptions(@PathVariable String name) {
 		Map whereMap = new HashMap<String,String>();
 		whereMap.put("likeName", name);
 		List<Company> list = companyService.list(whereMap);

@@ -31,14 +31,14 @@
 	<sql id="query_UserInfoPermission_where">
 		<where>
 			1 = 1
-			<if test="id != null and id !=''">and id = #{id}</if>
-			<if test="userId != null and userId !=''">and user_id = #{userId}</if>
-			<if test="fromCompanyId != null and fromCompanyId !=''">and from_company_id = #{fromCompanyId}</if>
-			<if test="toCompanyId != null and toCompanyId !=''">and to_company_id = #{toCompanyId}</if>
-			<if test="infoPermId != null and infoPermId !=''">and info_perm_id = #{infoPermId}</if>
+			<if test="id != null">and id = #{id}</if>
+			<if test="userId != null">and user_id = #{userId}</if>
+			<if test="fromCompanyId != null">and from_company_id = #{fromCompanyId}</if>
+			<if test="toCompanyId != null ">and to_company_id = #{toCompanyId}</if>
+			<if test="infoPermId != null">and info_perm_id = #{infoPermId}</if>
 			<if test="permColumn != null and permColumn !=''">and perm_column = #{permColumn}</if>
 			<if test="permColumnDesc != null and permColumnDesc !=''">and perm_column_desc = #{permColumnDesc}</if>
-			<if test="isDelete != null and isDelete !=''">and is_delete = #{isDelete}</if>
+			<if test="isDelete != null">and is_delete = #{isDelete}</if>
 			<if test="createTime != null and createTime !=''">and create_time = #{createTime}</if>
 			<if test="orderByClause != null ">order by  ${orderByClause}</if>
 		</where>

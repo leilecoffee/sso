@@ -131,3 +131,11 @@ export function userInfoPermSave(data){
 		data
 	})
 }
+
+export function userInfoPermDelete(data){
+	return fetch({
+		url: port_sso.userInfoPermDelete,
+		method: 'post',
+		data
+	})
+}

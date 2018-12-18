@@ -10,20 +10,20 @@
 		</panel-title>
 		<div class="panel-body">
 				<el-form :model="searchForm" :inline="true">
-					<el-form-item label="权限表:">
-						<el-select v-model="searchForm.state" placeholder="请选择">
+					<el-form-item label="授权表:">
+						<el-select v-model="searchForm.infoPermId" placeholder="请选择">
 							<el-option
 							  v-for="item in permTableOptions"
-							  :key="item.value"
-							  :label="item.label"
-							  :value="item.value">
+							  :key="item.infoPermId"
+							  :label="item.name"
+							  :value="item.infoPermId">
 							</el-option>
 						 </el-select>
 				  </el-form-item>
 				  <el-form-item>
 					<el-button type="primary" @click="userInfoPermQuery">查询</el-button>
 				  </el-form-item>
-				</el-form>	
+				</el-form>
 			<el-table
 				:data="tableData"
 				v-loading="load_data"
@@ -58,7 +58,7 @@
 				<el-table-column
 					label="操作"
 					width="180">
-					<template scope="props">
+					<template slot-scope="props">
 						<router-link :to="{name: 'userInfoPermUpdate', params: {id: props.row.id}}" tag="span">
 							<el-button type="info" size="small" icon="edit">编辑</el-button>
 						</router-link>
@@ -86,7 +86,6 @@
 
 <script>
 	import { panelTitle,bottomToolBar} from 'components';
-	import {permTableOptions} from 'common/config'
 	import {tools_date} from 'common/tools'
 	export default {
 		data(){
@@ -94,7 +93,7 @@
 				//查询表单
 				searchForm:{},
 				//信息状态选项
-				permTableOptions:permTableOptions,
+				permTableOptions:[],
 				tableData: null,
 				//当前页码
 				currentPage: 1,
@@ -112,6 +111,7 @@
 		},
 		created(){
 			this.userInfoPermQuery();
+			this.loadInfoPermList();
 		},
 		methods: {
 			//刷新操作
@@ -120,7 +120,7 @@
 			},
 			userInfoPermQuery(){
 				this.load_data = true;
-				let param ={"pageNum":this.currentPage,"pageSize":this.length,"state":this.searchForm.state};
+				let param ={"pageNum":this.currentPage,"pageSize":this.length,"infoPermId":this.searchForm.infoPermId};
 				this.$fetch.api.userInfoPermQuery(param).then(({data}) => {
 						this.load_data = false;
 						this.tableData = data.rows;
@@ -129,7 +129,15 @@
 						this.load_data = false;
 				});
 			},
-			
+			//获取信息授权列表
+			loadInfoPermList(){
+				this.$fetch.api.infoPermList().then(({ data }) => {
+						if (data) {
+								this.permTableOptions = data;
+						}
+				}).catch(() => {
+				});
+			},
 			handleCurrentChange(val){
 				this.currentPage = val;
 				this.userInfoPermQuery();
@@ -149,7 +157,7 @@
 					type: 'warning'
 				}).then(() => {
 					let param ={"id":row.id};
-					this.$fetch.api.quotedDelete(param).then(({data}) => {
+					this.$fetch.api.userInfoPermDelete(param).then(({data}) => {
 							this.$message.success("刪除成功");
 							this.userInfoPermQuery()
 					}).catch(() => {

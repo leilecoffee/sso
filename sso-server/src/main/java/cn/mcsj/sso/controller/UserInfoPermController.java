@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ import cn.mcsj.sso.constant.DeleteEnum;
 import cn.mcsj.sso.dto.base.PageBean;
 import cn.mcsj.sso.dto.base.ResultVO;
 import cn.mcsj.sso.dto.req.ReqInfoPermissionPageQueryBean;
-import cn.mcsj.sso.dto.req.ReqInfoPermissionSaveBean;
+import cn.mcsj.sso.dto.req.ReqUserInfoPermSaveBean;
 import cn.mcsj.sso.dto.res.ResUserInfoPermBean;
 import cn.mcsj.sso.entity.Company;
 import cn.mcsj.sso.entity.InfoPermission;
@@ -72,10 +73,15 @@ public class UserInfoPermController {
 		pageBean.setRows(data);
 		return new ResultVO(pageBean);
 	}
+
 	@PostMapping("/save")
-	public ResultVO save(@Valid @RequestBody ReqInfoPermissionSaveBean saveBean) {
-		userInfoPermissionService.save(saveBean);
-		return new ResultVO();
+	public ResultVO save(@Valid @RequestBody ReqUserInfoPermSaveBean saveBean) {
+		return userInfoPermissionService.save(saveBean);
 	}
 
+	@PostMapping("/delete")
+	public ResultVO delete(@RequestBody Map<String, Long> param) {
+		Long id = param.get("id");
+		return userInfoPermissionService.delete(id);
+	}
 }

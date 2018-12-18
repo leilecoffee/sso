@@ -63,7 +63,7 @@
 				<el-table-column
 					label="操作"
 					width="180">
-					<template scope="props">
+					<template slot-scope="props">
 						<router-link :to="{name: 'tableUpdate', params: {id: props.row.id}}" tag="span">
 							<el-button type="info" size="small" icon="edit">详情</el-button>
 						</router-link>

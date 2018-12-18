@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import cn.mcsj.sso.dto.base.PageBean;
-import cn.mcsj.sso.dto.req.ReqInfoPermissionSaveBean;
+import cn.mcsj.sso.dto.base.ResultVO;
+import cn.mcsj.sso.dto.req.ReqUserInfoPermSaveBean;
 import cn.mcsj.sso.entity.UserInfoPermission;
 
 public interface IUserInfoPermissionService{
@@ -17,7 +18,7 @@ public interface IUserInfoPermissionService{
 	@SuppressWarnings("rawtypes")
 	PageBean page(PageBean page, Map whereMap);
 
-	int save(ReqInfoPermissionSaveBean saveBean);
+	ResultVO save(ReqUserInfoPermSaveBean saveBean);
 
-    int delete(Long primaryKey);
+	ResultVO delete(Long primaryKey);
 }

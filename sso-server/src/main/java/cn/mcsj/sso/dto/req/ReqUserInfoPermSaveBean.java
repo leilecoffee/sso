@@ -1,12 +1,18 @@
 package cn.mcsj.sso.dto.req;
 
-public class ReqInfoPermissionSaveBean {
+import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+public class ReqUserInfoPermSaveBean {
+
+	@NotNull(message="{userInfoPerm.companyId.notNull}")
 	private Long companyId;
-
+	@NotNull(message="{userInfoPerm.infoPermId.notNull}")
 	private Long infoPermId;
-
+	@NotBlank(message="{userInfoPerm.permColumn.notBlank}")
 	private String permColumn;
+	@NotBlank(message="{userInfoPerm.permColumnDesc.notBlan}")
 	private String permColumnDesc;
 
 	public Long getCompanyId() {
