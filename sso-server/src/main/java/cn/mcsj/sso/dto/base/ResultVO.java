@@ -20,10 +20,23 @@ public class ResultVO {
 		msg = ResultCode.SUCCESS.getMessage();
 	}
 
+	public ResultVO(int code,String msg) {
+		this.code = code;
+		this.msg = msg;
+	}
+	
+	public ResultVO(int code, String msg, Object data) {
+		super();
+		this.code = code;
+		this.msg = msg;
+		this.data = data;
+	}
+
 	public ResultVO(ResultCode messageEnum) {
 		this.code = messageEnum.getCode();
 		this.msg = messageEnum.getMessage();
 	}
+	
 
 	public ResultVO(ResultCode messageEnum, Object data) {
 		this.code = messageEnum.getCode();

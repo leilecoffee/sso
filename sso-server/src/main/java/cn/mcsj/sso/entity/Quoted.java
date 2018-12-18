@@ -7,8 +7,14 @@ public class Quoted {
 	private Long id;
 	private Long companyId;
 	private Long productId;
+	private String productName;
 	private Double price;
 	private Date priceDate;
+	private Date visitStartTime;
+	private Date visitEndTime;
+	private Integer state;
+	private Integer isDelete;
+	private Date createTime;
 
 	public Long getId() {
 		return id;
@@ -34,6 +40,14 @@ public class Quoted {
 		this.productId = productId;
 	}
 
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
 	public Double getPrice() {
 		return price;
 	}
@@ -50,4 +64,43 @@ public class Quoted {
 		this.priceDate = priceDate;
 	}
 
+	public Date getVisitStartTime() {
+		return visitStartTime;
+	}
+
+	public void setVisitStartTime(Date visitStartTime) {
+		this.visitStartTime = visitStartTime;
+	}
+
+	public Date getVisitEndTime() {
+		return visitEndTime;
+	}
+
+	public void setVisitEndTime(Date visitEndTime) {
+		this.visitEndTime = visitEndTime;
+	}
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
+	public Integer getIsDelete() {
+		return isDelete;
+	}
+
+	public void setIsDelete(Integer isDelete) {
+		this.isDelete = isDelete;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 }

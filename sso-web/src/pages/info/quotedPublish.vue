@@ -15,7 +15,7 @@
 						</el-form-item>
 						<el-form-item label="产品名称" prop="productName">
 							<el-autocomplete
-								  v-model="name"
+								  v-model="infoForm.productName"
 								  :fetch-suggestions="queryProductAsync"
 								  placeholder="请输入内容"
 								  @select="handleSelect"
@@ -30,7 +30,7 @@
 						</el-form-item>
 						<el-form-item label="价格" prop="productPrice">
 							<template>
-							<el-input-number v-model="infoForm.productPrice" :precision="2" :step="0.1" ></el-input-number>
+							<el-input-number v-model="infoForm.productPrice" controls-position="right" :precision="2"  :min="0" :step="0.1" ></el-input-number>
 							</template>
 						</el-form-item>
 						<el-form-item label="价格日期" prop="priceDate">
@@ -41,11 +41,19 @@
 							</el-date-picker>
 						</el-form-item>
 						<el-form-item label="产品描述" prop="productDesc">
-							<el-input type="textarea" :rows="2" v-model="infoForm.productDesc"></el-input>
+							<el-input type="textarea" :rows="6" v-model="infoForm.productDesc" disabled></el-input>
+						</el-form-item>
+						<el-form-item label="授权访问时间" >
+								<el-date-picker
+								v-model="infoForm.visitDate"
+								type="daterange"
+								range-separator="至"
+								start-placeholder="开始日期"
+								end-placeholder="结束日期">
+							</el-date-picker>
 						</el-form-item>
 						<el-form-item>
 							<el-button type="primary" @click="submitForm()">提交</el-button>
-							<el-button @click="resetForm()">重置</el-button>
 					</el-form-item>
 					</el-form>
 				</el-col>
@@ -62,7 +70,6 @@ export default {
     data() {
         return {
             load_data: false,
-            name: '',
             timeout: null,
             infoForm: {
                 companyId: '',
@@ -72,7 +79,8 @@ export default {
                 productName: '',
                 productPrice: '0',
                 priceDate: '',
-                productType: ''
+                productType: '',
+								visitDate:''
             },
             rules: {
                 companyCode: [{ required: true, message: '请输入公司代码', trigger: 'blur' }],
@@ -96,7 +104,6 @@ export default {
             this.$fetch.api
                 .companyUserGet()
                 .then(({ data }) => {
-                    this.load_data = false;
                     if (data) {
                         this.infoForm.companyId = data.companyId;
                         this.infoForm.companyCode = data.code;
@@ -104,9 +111,9 @@ export default {
                     }
                 })
                 .catch(() => {
-                    this.load_data = false;
                 });
         },
+				//获取产品信息
         queryProductAsync(queryString, cb) {
 						this.$fetch.api.productList({filter:queryString}).then(({ data }) => {
 										if (data) {
@@ -125,6 +132,7 @@ export default {
 						}).catch(() => {
 						});
         },
+				//选择产品列表处理
         handleSelect(item) {
 						this.infoForm.productName = item.value;
             this.infoForm.productId = item.productId;
@@ -135,27 +143,39 @@ export default {
         //获取产品类型
         loadProductType(productTypeId) {
             this.$fetch.api.productTypeGet({"productTypeId":productTypeId}).then(({ data }) => {
-								this.load_data = false;
 								if (data) {
 										this.infoForm.productType = data.name;
 								}
 						}).catch(() => {
-								this.load_data = false;
 						});
         },
+				//提交表单
         submitForm() {
-					let param = {"productId":this.infoForm.productId,"price":this.infoForm.productPrice,"priceDate":this.infoForm.priceDate}
-					this.$fetch.api.quotedSave(param).then(({ data }) => {
-							this.load_data = false;
-							this.$message.success("保存成功");
-							//刷新页签
-					}).catch(() => {
-							this.load_data = false;
-					});
-				},
-        resetForm() {
-            this.$refs['infoForm'].resetFields();
-        }
+					
+					this.$confirm('此操作将提交该数据, 是否继续?', '提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						type: 'warning'
+					}).then(() => {
+						let param = {
+							"productId":this.infoForm.productId,
+							"productName":this.infoForm.productName,
+							"price":this.infoForm.productPrice,
+							"priceDate":this.infoForm.priceDate
+						}
+						if(this.infoForm.visitDate){
+								param["visitStartTime"] = this.infoForm.visitDate[0]
+								param["visitEndTime"] = this.infoForm.visitDate[1]
+						}
+						this.$fetch.api.quotedSave(param).then(({ data }) => {
+								this.$message.success("保存成功");
+								//返回上级路由
+								setTimeout(this.$router.back(), 1000)
+						}).catch(() => {
+						});
+					}).catch(() => {})
+					
+				}
     },
     components: {
         panelTitle

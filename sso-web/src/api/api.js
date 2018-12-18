@@ -81,3 +81,53 @@ export function quotedSave(data){
 		data
 	})
 }
+
+//获取登录人发布的报价信息
+export function quotedQuery(data){
+	return fetch({
+		url: port_sso.quotedQuery,
+		method: 'post',
+		data
+	})
+}
+
+//登录人删除发布的报价信息
+export function quotedDelete(data){
+	return fetch({
+		url: port_sso.quotedDelete,
+		method: 'post',
+		data
+	})
+}
+//获取登录人授权的信息
+export function userInfoPermQuery(data){
+	return fetch({
+		url: port_sso.userInfoPermQuery,
+		method: 'post',
+		data
+	})
+}
+
+//获取公司选项
+export function companyOptions(data){
+	return fetch({
+		url: port_sso.companyOptions+"/"+data.filter,
+		method: 'post'
+	})
+}
+
+
+export function infoPermList(){
+	return fetch({
+		url: port_sso.infoPermList,
+		method: 'post'
+	})
+}
+
+export function userInfoPermSave(data){
+	return fetch({
+		url: port_sso.userInfoPermSave,
+		method: 'post',
+		data
+	})
+}

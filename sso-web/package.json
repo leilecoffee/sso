@@ -2,7 +2,7 @@
   "name": "vue-element-admin",
   "version": "1.0.0",
   "description": "A vue-element-admin project",
-  "author": "zzmhot <zzmhot@163.com>",
+  "author": "me",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -11,7 +11,7 @@
   "dependencies": {
     "axios": "^0.16.1",
     "echarts": "^3.5.0",
-    "element-ui": "^1.3.1",
+    "element-ui": "^2.4.11",
     "font-awesome": "^4.7.0",
     "js-base64": "^2.1.9",
     "normalize.css": "^5.0.0",

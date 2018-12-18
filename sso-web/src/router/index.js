@@ -27,12 +27,6 @@ import homeComponent from 'pages/home'
 import noPageComponent from 'pages/error/404'
 //login
 import loginComponent from 'pages/user/login'
-
-import userInfoComponent from 'pages/user/info'
-
-import changepwdComponent from 'pages/user/changepwd'
-//base table
-import publishComponent from 'pages/info/publish'
 //base table
 import baseTableComponent from 'pages/table/base'
 //sort table
@@ -86,27 +80,51 @@ const routes = [{
       auth: true
     }
   }, {
+    path: '/info/quoted',
+    name: 'infoQuoted',
+    component: resolve => require(['pages/info/quoted'], resolve),
+    meta: {
+      title: "报价信息",
+      auth: true
+    }
+  },{
+    path: '/info/quotedPublish',
+    name: 'infoQuotedPublish',
+    component: resolve => require(['pages/info/quotedPublish'], resolve),
+    meta: {
+      title: "发布信息",
+      auth: true
+    }
+  },{
+    path: '/permission/userInfoPerm',
+    name: 'userInfoPerm',
+    component: resolve => require(['pages/permission/userInfoPerm/table'], resolve),
+    meta: {
+      title: "权限查询",
+      auth: true
+    }
+  }, {
+    path: '/permission/userInfoPermSave',
+    name: 'userInfoPermSave',
+    component: resolve => require(['pages/permission/userInfoPerm/save'], resolve),
+    meta: {
+      title: "添加授权信息",
+      auth: true
+    }
+  },{
+    path: '/permission/userInfoPermSave/:id',
+    name: 'userInfoPermUpdate',
+    component: resolve => require(['pages/permission/userInfoPerm/save'], resolve),
+    meta: {
+      title: "编辑授权信息",
+      auth: true
+    }
+  },{
     path: '/table/base',
     name: 'tableBase',
     component: baseTableComponent,
     meta: {
       title: "基本表格",
-      auth: true
-    }
-  }, {
-    path: '/info/publish',
-    name: 'infoPublish',
-    component: resolve => require(['pages/info/publish'], resolve),
-    meta: {
-      title: "信息发布",
-      auth: true
-    }
-  },{
-    path: '/info/query',
-    name: 'infoQuery',
-    component: resolve => require(['pages/info/query'], resolve),
-    meta: {
-      title: "信息发布",
       auth: true
     }
   },{

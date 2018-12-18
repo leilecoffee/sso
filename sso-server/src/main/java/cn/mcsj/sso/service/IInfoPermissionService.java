@@ -4,19 +4,19 @@ import java.util.List;
 import java.util.Map;
 
 import cn.mcsj.sso.dto.base.PageBean;
-import cn.mcsj.sso.entity.ProductTypePermission;
+import cn.mcsj.sso.entity.InfoPermission;
 
-public interface IProductTypePermissionService{
+public interface IInfoPermissionService{
 	
-	ProductTypePermission getOne(Long primaryKey);
+	InfoPermission getOne(Long primaryKey);
 
 	@SuppressWarnings("rawtypes")
-	List<ProductTypePermission> list(Map whereMap);
+	List<InfoPermission> list(Map whereMap);
 	
 	@SuppressWarnings("rawtypes")
 	PageBean page(PageBean page, Map whereMap);
 
-	int save(ProductTypePermission productTypePermission);
+	int save(InfoPermission infoPermission);
 
     int delete(Long primaryKey);
 }

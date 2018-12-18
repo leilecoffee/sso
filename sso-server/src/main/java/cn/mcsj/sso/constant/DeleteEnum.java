@@ -2,7 +2,7 @@ package cn.mcsj.sso.constant;
 
 public enum DeleteEnum {
 	
-	Y(0),N(1);
+	N(0),Y(1);
 	
 	private int code;
 

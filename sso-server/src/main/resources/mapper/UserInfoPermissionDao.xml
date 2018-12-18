@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+
+<mapper namespace="cn.mcsj.sso.dao.UserInfoPermissionDao">  
+     
+    <resultMap id="userInfoPermissionResultMap" type="UserInfoPermission">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="fromCompanyId" column="from_company_id" />
+		<result property="toCompanyId" column="to_company_id" />
+		<result property="infoPermId" column="info_perm_id" />
+		<result property="permColumn" column="perm_column" />
+		<result property="permColumnDesc" column="perm_column_desc" />
+		<result property="isDelete" column="is_delete" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+	
+	<sql id="userInfoPermissionColumns"> 
+			id,
+			user_id,
+			from_company_id,
+			to_company_id,
+			info_perm_id,
+			perm_column,
+			perm_column_desc,
+			is_delete,
+			create_time
+	</sql>
+	
+	<sql id="query_UserInfoPermission_where">
+		<where>
+			1 = 1
+			<if test="id != null and id !=''">and id = #{id}</if>
+			<if test="userId != null and userId !=''">and user_id = #{userId}</if>
+			<if test="fromCompanyId != null and fromCompanyId !=''">and from_company_id = #{fromCompanyId}</if>
+			<if test="toCompanyId != null and toCompanyId !=''">and to_company_id = #{toCompanyId}</if>
+			<if test="infoPermId != null and infoPermId !=''">and info_perm_id = #{infoPermId}</if>
+			<if test="permColumn != null and permColumn !=''">and perm_column = #{permColumn}</if>
+			<if test="permColumnDesc != null and permColumnDesc !=''">and perm_column_desc = #{permColumnDesc}</if>
+			<if test="isDelete != null and isDelete !=''">and is_delete = #{isDelete}</if>
+			<if test="createTime != null and createTime !=''">and create_time = #{createTime}</if>
+			<if test="orderByClause != null ">order by  ${orderByClause}</if>
+		</where>
+	</sql>
+	
+	<select id="getOne" parameterType="long" resultMap="userInfoPermissionResultMap">
+		select
+		<include refid="userInfoPermissionColumns" />
+		from t_user_info_permission
+		where id = #{id}
+	</select>
+	
+	<select id="list" parameterType="java.util.Map" resultMap="userInfoPermissionResultMap">
+		select
+		<include refid="userInfoPermissionColumns" />
+		from t_user_info_permission
+		<include refid="query_UserInfoPermission_where" />
+		<if test="_start != null and _pageSize != null">limit #{_start},#{_pageSize}</if>
+	</select>
+	
+    <select id="total" parameterType="java.util.Map" resultType="int">
+		select count(1) from t_user_info_permission
+		<include refid="query_UserInfoPermission_where" />
+	</select>
+    
+    <insert id="insert" parameterType="UserInfoPermission" useGeneratedKeys="true" keyProperty="id">  
+        insert into t_user_info_permission(
+        <include refid="userInfoPermissionColumns" />
+        )  
+		values(
+        #{id},
+        #{userId},
+        #{fromCompanyId},
+        #{toCompanyId},
+        #{infoPermId},
+        #{permColumn},
+        #{permColumnDesc},
+        0,
+        NOW()
+		)
+    </insert>  
+      
+    <update id="update" parameterType="UserInfoPermission">
+		update t_user_info_permission
+		<set>
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>
+			<if test="fromCompanyId != null">
+				from_company_id = #{fromCompanyId},
+			</if>
+			<if test="toCompanyId != null">
+				to_company_id = #{toCompanyId},
+			</if>
+			<if test="infoPermId != null">
+				info_perm_id = #{infoPermId},
+			</if>
+			<if test="permColumn != null">
+				perm_column = #{permColumn},
+			</if>
+			<if test="permColumnDesc != null">
+				perm_column_desc = #{permColumnDesc},
+			</if>
+			<if test="isDelete != null">
+				is_delete = #{isDelete},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="long">
+		delete from t_user_info_permission where
+		id = #{id}
+	</delete>
+      
+</mapper>  

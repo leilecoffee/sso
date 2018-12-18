@@ -8,16 +8,28 @@
 		<result property="id" column="id" />
 		<result property="companyId" column="company_id" />
 		<result property="productId" column="product_id" />
+		<result property="productName" column="product_name" />
 		<result property="price" column="price" />
 		<result property="priceDate" column="price_date" />
+		<result property="visitStartTime" column="visit_start_time" />
+		<result property="visitEndTime" column="visit_end_time" />
+		<result property="state" column="state" />
+		<result property="isDelete" column="is_delete" />
+		<result property="createTime" column="create_time" />
 	</resultMap>
 	
 	<sql id="quotedColumns"> 
 			id,
 			company_id,
 			product_id,
+			product_name,
 			price,
-			price_date
+			price_date,
+			visit_start_time,
+			visit_end_time,
+			state,
+			is_delete,
+			create_time
 	</sql>
 	
 	<sql id="query_Quoted_where">
@@ -26,8 +38,15 @@
 			<if test="id != null and id !=''">and id = #{id}</if>
 			<if test="companyId != null and companyId !=''">and company_id = #{companyId}</if>
 			<if test="productId != null and productId !=''">and product_id = #{productId}</if>
+			<if test="productName != null and productName !=''">and product_name = #{productName}</if>
 			<if test="price != null and price !=''">and price = #{price}</if>
 			<if test="priceDate != null and priceDate !=''">and price_date = #{priceDate}</if>
+			<if test="visitStartTime != null and visitStartTime !=''">and visit_start_time = #{visitStartTime}</if>
+			<if test="visitEndTime != null and visitEndTime !=''">and visit_end_time = #{visitEndTime}</if>
+			<if test="state != null">and state = #{state}</if>
+			<if test="isDelete != null">and is_delete = #{isDelete}</if>
+			<if test="createTime != null and createTime !=''">and create_time = #{createTime}</if>
+			<if test="orderByClause != null ">order by  ${orderByClause}</if>
 		</where>
 	</sql>
 	
@@ -59,8 +78,14 @@
         #{id},
         #{companyId},
         #{productId},
+        #{productName},
         #{price},
-        #{priceDate}
+        #{priceDate},
+        #{visitStartTime},
+        #{visitEndTime},
+        0,
+        0,
+        NOW()
 		)
     </insert>  
       
@@ -78,6 +103,21 @@
 			</if>
 			<if test="priceDate != null">
 				price_date = #{priceDate},
+			</if>
+			<if test="visitStartTime != null">
+				visit_start_time = #{visitStartTime},
+			</if>
+			<if test="visitEndTime != null">
+				visit_end_time = #{visitEndTime},
+			</if>
+			<if test="state != null">
+				state = #{state},
+			</if>
+			<if test="isDelete != null">
+				is_delete = #{isDelete},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
 			</if>
 		</set>
 		where id = #{id}

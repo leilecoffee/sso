@@ -22,4 +22,16 @@ export const productList = "product/list"
 //获取产品类型
 export const productTypeGet = "productType/get"
 
+export const quotedQuery = "quoted/query"
+
 export const quotedSave = "quoted/save"
+
+export const quotedDelete = "quoted/delete"
+//获取登录人授权的信息
+export const userInfoPermQuery = "userInfoPerm/query"
+//获取公司选项
+export const companyOptions = "company/options"
+//获取授权表列表
+export const infoPermList = "infoPerm/list"
+
+export const userInfoPermSave="userInfoPerm/save"

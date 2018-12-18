@@ -24,6 +24,7 @@
 			<if test="companyId != null and companyId !=''">and company_id = #{companyId}</if>
 			<if test="code != null and code !=''">and code = #{code}</if>
 			<if test="name != null and name !=''">and name = #{name}</if>
+			<if test="likeName != null and likeName !=''">and name like concat('%',#{likeName},'%');</if>
 			<if test="createTime != null and createTime !=''">and create_time = #{createTime}</if>
 		</where>
 	</sql>

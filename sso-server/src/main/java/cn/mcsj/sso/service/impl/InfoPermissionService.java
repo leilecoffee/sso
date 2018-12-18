@@ -11,28 +11,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.mcsj.sso.constant.GlobalConstant;
-import cn.mcsj.sso.dao.ProductTypePermissionDao;
+import cn.mcsj.sso.dao.InfoPermissionDao;
 import cn.mcsj.sso.dto.base.PageBean;
-import cn.mcsj.sso.entity.ProductTypePermission;
-import cn.mcsj.sso.service.IProductTypePermissionService;
+import cn.mcsj.sso.entity.InfoPermission;
+import cn.mcsj.sso.service.IInfoPermissionService;
 
 @Service
-public class ProductTypePermissionService implements IProductTypePermissionService {
+public class InfoPermissionService implements IInfoPermissionService {
 	
 	@Autowired
-	private ProductTypePermissionDao productTypePermissionDao;
+	private InfoPermissionDao infoPermissionDao;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
-	public ProductTypePermission getOne(Long primaryKey) {
-		return productTypePermissionDao.getOne(primaryKey);
+	public InfoPermission getOne(Long primaryKey) {
+		return infoPermissionDao.getOne(primaryKey);
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public List<ProductTypePermission> list(Map whereMap) {
-		return productTypePermissionDao.list(whereMap);
+	public List<InfoPermission> list(Map whereMap) {
+		return infoPermissionDao.list(whereMap);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -40,8 +40,8 @@ public class ProductTypePermissionService implements IProductTypePermissionServi
 	public PageBean page(PageBean page, Map whereMap) {
 		whereMap.put(GlobalConstant.PAGE_START, page.getStart());
 		whereMap.put(GlobalConstant.PAGE_SIZE, page.getPageSize());
-		int total = productTypePermissionDao.total(whereMap);
-		List<ProductTypePermission> rows = new ArrayList<ProductTypePermission>();
+		int total = infoPermissionDao.total(whereMap);
+		List<InfoPermission> rows = new ArrayList<InfoPermission>();
 		if (total > 0) {
 			rows = list(whereMap);
 		}
@@ -52,17 +52,17 @@ public class ProductTypePermissionService implements IProductTypePermissionServi
 
 	@Transactional
 	@Override
-	public int save(ProductTypePermission productTypePermission) {
-		Long id = productTypePermission.getId();
-		if (id == null) {
-			return productTypePermissionDao.insert(productTypePermission);
+	public int save(InfoPermission infoPermission) {
+		Long infoPermId = infoPermission.getInfoPermId();
+		if (infoPermId == null) {
+			return infoPermissionDao.insert(infoPermission);
 		} else {
-			return productTypePermissionDao.update(productTypePermission);
+			return infoPermissionDao.update(infoPermission);
 		}
 	}
 
 	@Override
 	public int delete(Long primaryKey) {
-		return productTypePermissionDao.delete(primaryKey);
+		return infoPermissionDao.delete(primaryKey);
 	}
 }

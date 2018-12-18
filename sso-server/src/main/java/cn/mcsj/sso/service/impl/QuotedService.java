@@ -8,22 +8,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import cn.mcsj.sso.constant.DeleteEnum;
 import cn.mcsj.sso.constant.GlobalConstant;
+import cn.mcsj.sso.constant.ResultCode;
 import cn.mcsj.sso.dao.QuotedDao;
 import cn.mcsj.sso.dto.base.PageBean;
+import cn.mcsj.sso.dto.base.ResultVO;
+import cn.mcsj.sso.dto.req.ReqQuotedSaveBean;
 import cn.mcsj.sso.entity.Quoted;
+import cn.mcsj.sso.entity.User;
 import cn.mcsj.sso.service.IQuotedService;
+import cn.mcsj.sso.util.ApplicationUtil;
 
 @Service
 public class QuotedService implements IQuotedService {
-	
+
 	@Autowired
 	private QuotedDao quotedDao;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+
 	@Override
 	public Quoted getOne(Long primaryKey) {
 		return quotedDao.getOne(primaryKey);
@@ -50,19 +55,35 @@ public class QuotedService implements IQuotedService {
 		return page;
 	}
 
-	@Transactional
+	/**
+	 * 软删除
+	 */
 	@Override
-	public int save(Quoted quoted) {
-		Long id = quoted.getId();
-		if (id == null) {
-			return quotedDao.insert(quoted);
-		} else {
-			return quotedDao.update(quoted);
+	public ResultVO delete(Long primaryKey) {
+		User user = ApplicationUtil.getCurrentUser();
+		Quoted quoted = quotedDao.getOne(primaryKey);
+		if (quoted.getCompanyId().equals(user.getCompanyId())) {
+			Quoted entity = new Quoted();
+			entity.setId(primaryKey);
+			entity.setIsDelete(DeleteEnum.Y.getCode());
+			quotedDao.update(entity);
+			return new ResultVO();
 		}
+		return new ResultVO(ResultCode.PARAM_ERROR);
 	}
 
 	@Override
-	public int delete(Long primaryKey) {
-		return quotedDao.delete(primaryKey);
+	public int save(ReqQuotedSaveBean quotedSaveBean) {
+		User user = ApplicationUtil.getCurrentUser();
+		Quoted quoted = new Quoted();
+		quoted.setCompanyId(user.getCompanyId());
+		quoted.setProductId(quotedSaveBean.getProductId());
+		quoted.setProductName(quotedSaveBean.getProductName());
+		quoted.setPrice(quotedSaveBean.getPrice());
+		quoted.setPriceDate(quotedSaveBean.getPriceDate());
+		quoted.setVisitStartTime(quotedSaveBean.getVisitStartTime());
+		quoted.setVisitEndTime(quotedSaveBean.getVisitEndTime());
+		return quotedDao.insert(quoted);
 	}
+
 }

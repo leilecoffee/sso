@@ -1,28 +1,33 @@
-package cn.mcsj.sso.dto.req;
+package cn.mcsj.sso.dto.res;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
+public class ResQuotedBean {
 
-public class ReqQuotedSaveBean {
-	@NotNull(message="{product.notNull}")
-	private Long productId;
-	@NotNull(message="{product.notNull}")
+	private Long id;
+	private String companyName;
 	private String productName;
-	@NotNull(message="{product.price.notNull}")
 	private Double price;
-	@NotNull(message="{product.priceDate.notNull}")
 	private Date priceDate;
 	private Date visitStartTime;
-
 	private Date visitEndTime;
+	private Integer state;
+	private Date createTime;
 
-	public Long getProductId() {
-		return productId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setProductId(Long productId) {
-		this.productId = productId;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
 	public String getProductName() {
@@ -41,8 +46,8 @@ public class ReqQuotedSaveBean {
 		this.price = price;
 	}
 
-	public Date getPriceDate() {
-		return priceDate;
+	public String getPriceDate() {
+		return new java.text.SimpleDateFormat("yyyy-MM-dd").format(this.priceDate);
 	}
 
 	public void setPriceDate(Date priceDate) {
@@ -65,4 +70,19 @@ public class ReqQuotedSaveBean {
 		this.visitEndTime = visitEndTime;
 	}
 
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
+	public String getCreateTime() {
+		return new java.text.SimpleDateFormat("yyyy-MM-dd").format(this.createTime);
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 }

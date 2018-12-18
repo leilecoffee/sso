@@ -49,12 +49,8 @@ export default {
                     icon: 'fa-table',
                     child: [
                         {
-                            title: '信息发布',
-                            path: '/info/publish'
-                        },
-                        {
-                            title: '信息查询',
-                            path: '/table/sort'
+                            title: '报价信息',
+                            path: '/info/quoted'
                         },
 												{
 														title: '阅读日志',
@@ -76,7 +72,7 @@ export default {
 												},
                         {
                             title: '权限查询',
-                            path: '/table/base'
+                            path: '/permission/userInfoPerm'
                         }
                     ]
                 },{

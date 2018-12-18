@@ -1,8 +1,11 @@
 package cn.mcsj.sso.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,12 +25,6 @@ public class CompanyController {
 	@Autowired
 	private ICompanyService companyService;
 
-	@PostMapping("/list")
-	public ResultVO list() {
-		Map<String, Object> whereMap = new HashMap<String, Object>();
-		List<Company> list = companyService.list(whereMap);
-		return new ResultVO(list);
-	}
 	/**
 	 * 获取登录用户的公司信息
 	 * @return
@@ -40,5 +37,25 @@ public class CompanyController {
 			return new ResultVO(company);
 		}
 		return new ResultVO();
+	}
+	/**
+	 * 获取公司选项
+	 * @param name
+	 * @return
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@PostMapping("/options/{name}")
+	public ResultVO getCompanyOptions(@PathParam("name") String name) {
+		Map whereMap = new HashMap<String,String>();
+		whereMap.put("likeName", name);
+		List<Company> list = companyService.list(whereMap);
+		List<HashMap> data = new ArrayList<HashMap>();
+		for(Company company:list) {
+			HashMap<String,Object> option = new HashMap<String,Object>();
+			option.put("companyId", company.getCompanyId()+"");
+			option.put("companyName", company.getName());
+			data.add(option);
+		}
+		return new ResultVO(data);
 	}
 }
