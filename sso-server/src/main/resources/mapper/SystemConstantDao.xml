@@ -38,6 +38,13 @@
 		where id = #{id}
 	</select>
 	
+	<select id="getByCode" parameterType="String" resultMap="systemConstantResultMap">
+		select
+		<include refid="systemConstantColumns" />
+		from t_system_constant
+		where code = #{code}
+	</select>
+	
 	<select id="list" parameterType="java.util.Map" resultMap="systemConstantResultMap">
 		select
 		<include refid="systemConstantColumns" />

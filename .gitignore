@@ -1,3 +1,5 @@
 /sso-server/.classpath
 /sso-server/.project
 /sso-server/target
+/sso-server/.settings
+/sso-web/package-lock.json

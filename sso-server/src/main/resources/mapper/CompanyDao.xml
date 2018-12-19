@@ -24,8 +24,20 @@
 			<if test="companyId != null and companyId !=''">and company_id = #{companyId}</if>
 			<if test="code != null and code !=''">and code = #{code}</if>
 			<if test="name != null and name !=''">and name = #{name}</if>
-			<if test="likeName != null and likeName !=''">and name like concat('%',#{likeName},'%');</if>
+			<if test="likeName != null and likeName !=''">and name like concat('%',#{likeName},'%')</if>
 			<if test="createTime != null and createTime !=''">and create_time = #{createTime}</if>
+			<if test="roleId != null">
+				and company_id IN (
+					SELECT
+						u.company_ID
+					FROM
+						t_user u,
+						t_user_role ur
+					WHERE
+						u.user_id = ur.user_id
+					AND ur.role_id = #{roleId}
+				)
+			</if>
 		</where>
 	</sql>
 	
@@ -81,5 +93,4 @@
 		delete from t_company where
 		company_id = #{companyId}
 	</delete>
-      
 </mapper>  

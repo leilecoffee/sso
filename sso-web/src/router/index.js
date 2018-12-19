@@ -27,14 +27,6 @@ import homeComponent from 'pages/home'
 import noPageComponent from 'pages/error/404'
 //login
 import loginComponent from 'pages/user/login'
-//base table
-import baseTableComponent from 'pages/table/base'
-//sort table
-import sortTableComponent from 'pages/table/sort'
-//save table
-import saveTableComponent from 'pages/table/save'
-//bar charts
-import barChartsComponent from 'pages/charts/bar'
 
 Vue.use(VueRouter)
 
@@ -82,17 +74,25 @@ const routes = [{
   }, {
     path: '/info/quoted',
     name: 'infoQuoted',
-    component: resolve => require(['pages/info/quoted'], resolve),
+    component: resolve => require(['pages/info/quoted/table'], resolve),
     meta: {
       title: "报价信息",
       auth: true
     }
   },{
-    path: '/info/quotedPublish',
-    name: 'infoQuotedPublish',
-    component: resolve => require(['pages/info/quotedPublish'], resolve),
+    path: '/info/quotedSave',
+    name: 'infoQuotedSave',
+    component: resolve => require(['pages/info/quoted/save'], resolve),
     meta: {
       title: "发布信息",
+      auth: true
+    }
+  },{
+    path: '/permission/apply',
+    name: 'permissionApply',
+    component: resolve => require(['pages/permission/apply/table'], resolve),
+    meta: {
+      title: "授权处理",
       auth: true
     }
   },{
@@ -111,52 +111,20 @@ const routes = [{
       title: "添加授权信息",
       auth: true
     }
-  },{
-    path: '/permission/userInfoPermSave/:id',
-    name: 'userInfoPermUpdate',
-    component: resolve => require(['pages/permission/userInfoPerm/save'], resolve),
+  }, {
+    path: '/read/publisher',
+    name: 'readPublisher',
+    component: resolve => require(['pages/read/publisher'], resolve),
     meta: {
-      title: "编辑授权信息",
-      auth: true
-    }
-  },{
-    path: '/table/base',
-    name: 'tableBase',
-    component: baseTableComponent,
-    meta: {
-      title: "基本表格",
-      auth: true
-    }
-  },{
-    path: '/table/sort',
-    name: 'tableSort',
-    component: sortTableComponent,
-    meta: {
-      title: "排序表格",
+      title: "发布者名单",
       auth: true
     }
   }, {
-    path: '/table/update/:id',
-    name: 'tableUpdate',
-    component: saveTableComponent,
+    path: '/info/reader',
+    name: 'infoReader',
+    component: resolve => require(['pages/info/reader'], resolve),
     meta: {
-      title: "数据修改",
-      auth: true
-    }
-  }, {
-    path: '/table/add',
-    name: 'tableAdd',
-    component: saveTableComponent,
-    meta: {
-      title: "添加数据",
-      auth: true
-    }
-  }, {
-    path: '/charts/bar',
-    name: 'chartsBar',
-    component: barChartsComponent,
-    meta: {
-      title: "柱状图表",
+      title: "阅读者名单",
       auth: true
     }
   }]

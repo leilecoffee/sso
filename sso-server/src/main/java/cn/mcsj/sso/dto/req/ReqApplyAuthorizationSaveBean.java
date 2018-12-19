@@ -4,10 +4,10 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-public class ReqUserInfoPermSaveBean {
+public class ReqApplyAuthorizationSaveBean {
 
-	@NotNull(message="{companyName.notNull}")
-	private Long companyId;
+	@NotNull(message = "{applyId.notNull}")
+	private Long applyId;
 	@NotNull(message="{permTable.notNull}")
 	private Long infoPermId;
 	@NotBlank(message="{permColumn.notBlank}")
@@ -15,12 +15,12 @@ public class ReqUserInfoPermSaveBean {
 	@NotBlank(message="{permColumnDesc.notBlan}")
 	private String permColumnDesc;
 
-	public Long getCompanyId() {
-		return companyId;
+	public Long getApplyId() {
+		return applyId;
 	}
 
-	public void setCompanyId(Long companyId) {
-		this.companyId = companyId;
+	public void setApplyId(Long applyId) {
+		this.applyId = applyId;
 	}
 
 	public Long getInfoPermId() {

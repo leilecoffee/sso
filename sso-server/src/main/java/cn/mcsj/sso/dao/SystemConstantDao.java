@@ -11,6 +11,8 @@ import cn.mcsj.sso.entity.SystemConstant;
 public interface SystemConstantDao {
 	
 	SystemConstant getOne(Long id);
+	
+	SystemConstant getByCode(String code);
 
 	List<SystemConstant> list(Map map);
 

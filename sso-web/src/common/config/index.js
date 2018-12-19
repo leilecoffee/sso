@@ -17,3 +17,15 @@ export const infoStateOptions = [{
 	value: '1',
 	label: '已上链'
 }]
+
+//申请状态选项
+export const applyStateOptions = [{
+	value: '0',
+	label: '审核中'
+}, {
+	value: '1',
+	label: '已审核'
+}, {
+	value: '2',
+	label: '驳回'
+}]

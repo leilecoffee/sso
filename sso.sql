@@ -10,10 +10,30 @@ Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2018-12-18 19:19:29
+Date: 2018-12-19 17:34:06
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for t_apply
+-- ----------------------------
+DROP TABLE IF EXISTS `t_apply`;
+CREATE TABLE `t_apply` (
+  `apply_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `to_company_id` int(11) DEFAULT NULL,
+  `state` tinyint(4) DEFAULT NULL COMMENT '0-审核中，1-已审核，2-驳回',
+  `reason` text,
+  `is_delete` tinyint(4) DEFAULT NULL COMMENT '0-未删除，1-删除',
+  `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`apply_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_apply
+-- ----------------------------
+INSERT INTO `t_apply` VALUES ('2', '3', '1', '1', '', '0', '2018-12-19 16:22:36');
 
 -- ----------------------------
 -- Table structure for t_company
@@ -30,8 +50,8 @@ CREATE TABLE `t_company` (
 -- ----------------------------
 -- Records of t_company
 -- ----------------------------
-INSERT INTO `t_company` VALUES ('1', '91440300MA5EUCXT22', '金荣中国金融业有限公司', '2018-12-17 14:45:54');
-INSERT INTO `t_company` VALUES ('2', '91440300321697996H', '深圳前海金道贵金属有限公司', null);
+INSERT INTO `t_company` VALUES ('1', '91440300MA5EUCXT22', '(发布)金荣中国金融业有限公司', '2018-12-19 16:01:44');
+INSERT INTO `t_company` VALUES ('2', '91440300321697996H', '(阅读)深圳前海金道贵金属有限公司', '2018-12-19 16:01:55');
 
 -- ----------------------------
 -- Table structure for t_info_permission
@@ -142,7 +162,7 @@ CREATE TABLE `t_quoted` (
   `is_delete` tinyint(4) DEFAULT NULL COMMENT '0-有效 ，1-已删除',
   `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_quoted
@@ -163,6 +183,7 @@ INSERT INTO `t_quoted` VALUES ('14', '1', '1', '成色不低于99.95％黄金', 
 INSERT INTO `t_quoted` VALUES ('15', '1', '1', '成色不低于99.95％黄金', '0.30', '2018-12-18 15:18:47', '2018-12-18 15:18:47', '2018-12-18 15:18:47', '0', '0', '2018-12-18 15:18:47');
 INSERT INTO `t_quoted` VALUES ('16', '1', '1', '成色不低于99.95％黄金', '0.50', '2018-12-18 15:18:48', '2018-12-18 15:18:48', '2018-12-18 15:18:48', '0', '0', '2018-12-18 15:18:48');
 INSERT INTO `t_quoted` VALUES ('17', '1', '1', '成色不低于99.95％黄金', '0.00', '2018-12-18 15:18:50', '2018-12-18 15:18:50', '2018-12-18 15:18:50', '0', '0', '2018-12-18 15:18:50');
+INSERT INTO `t_quoted` VALUES ('18', '1', '1', '成色不低于99.95％黄金', '0.00', '2018-12-19 00:00:00', '2018-12-19 00:00:00', '2019-01-31 00:00:00', '0', '0', '2018-12-19 10:00:25');
 
 -- ----------------------------
 -- Table structure for t_read_log
@@ -249,8 +270,8 @@ CREATE TABLE `t_system_constant` (
 -- ----------------------------
 -- Records of t_system_constant
 -- ----------------------------
-INSERT INTO `t_system_constant` VALUES ('1', 'publish_role_id', '2', null, null);
-INSERT INTO `t_system_constant` VALUES ('2', 'read_role_id', '3', null, null);
+INSERT INTO `t_system_constant` VALUES ('1', 'publish_role_id', '1', null, null);
+INSERT INTO `t_system_constant` VALUES ('2', 'read_role_id', '2', null, null);
 
 -- ----------------------------
 -- Table structure for t_user
@@ -274,8 +295,8 @@ CREATE TABLE `t_user` (
 -- Records of t_user
 -- ----------------------------
 INSERT INTO `t_user` VALUES ('1', '1056196129@qq.com', '1949c7f6e2127bb1ce52a14516b38f25a4e41731', 'ca42e099bf6c45b990a4a323cc82eb24', '张磊', '15989305930', null, '0', '2018-12-03 15:47:50');
-INSERT INTO `t_user` VALUES ('2', 'jrzg', '38312cb5b3ee862eba514f7ebc97f82ca16df3f4', 'ffb737f746414aaebe28c8f54ed61047', '金荣', '13678945621', '1', '0', '2018-12-17 15:10:02');
-INSERT INTO `t_user` VALUES ('3', 'jdgjs', 'f4bd672cf8c19fc4438597f19a046fa979431a47', '056e91b485934d728c139a444bab8691', '金道', '13578954635', '2', '0', '2018-12-17 15:10:56');
+INSERT INTO `t_user` VALUES ('2', 'jrzg', '38312cb5b3ee862eba514f7ebc97f82ca16df3f4', 'ffb737f746414aaebe28c8f54ed61047', '发布', '13678945621', '1', '0', '2018-12-17 15:10:02');
+INSERT INTO `t_user` VALUES ('3', 'jdgjs', 'f4bd672cf8c19fc4438597f19a046fa979431a47', '056e91b485934d728c139a444bab8691', '阅读', '13578954635', '2', '0', '2018-12-17 15:10:56');
 
 -- ----------------------------
 -- Table structure for t_user_info_permission
@@ -292,12 +313,12 @@ CREATE TABLE `t_user_info_permission` (
   `is_delete` tinyint(4) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_user_info_permission
 -- ----------------------------
-INSERT INTO `t_user_info_permission` VALUES ('1', '2', '1', '2', '1', 'product_name,price,price_date', '产品名称,价格,价格日期', '0', '2018-12-18 18:29:23');
+INSERT INTO `t_user_info_permission` VALUES ('5', '2', '1', '2', '1', 'product_name,price,price_date', '产品名称,价格,价格日期', '0', '2018-12-19 16:22:36');
 
 -- ----------------------------
 -- Table structure for t_user_role

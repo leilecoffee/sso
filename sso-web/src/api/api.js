@@ -139,3 +139,56 @@ export function userInfoPermDelete(data){
 		data
 	})
 }
+//获取发布者名单
+export function companyPublisher(data){
+	return fetch({
+		url: port_sso.companyPublisher,
+		method: 'post',
+		data
+	})
+}
+
+//授权申请 新增
+export function applySave(data){
+	return fetch({
+		url: port_sso.applySave,
+		method: 'post',
+		data
+	})
+}
+
+//登录人授权申请查询
+export function applyQuery(data){
+	return fetch({
+		url: port_sso.applyQuery,
+		method: 'post',
+		data
+	})
+}
+
+//授权申请  授权操作
+export function applyAuthorization(data){
+	return fetch({
+		url: port_sso.applyAuthorization,
+		method: 'post',
+		data
+	})
+}
+
+//申请驳回操作
+export function applyReject(data){
+	return fetch({
+		url: port_sso.applyReject,
+		method: 'post',
+		data
+	})
+}
+
+//获取阅读者名单
+export function companyReader(data){
+	return fetch({
+		url: port_sso.companyReader,
+		method: 'post',
+		data
+	})
+}

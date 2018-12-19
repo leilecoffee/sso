@@ -4,7 +4,7 @@
 			<el-button @click.stop="on_refresh" size="small">
 				<i class="fa fa-refresh"></i>
 			</el-button>
-			<router-link :to="{name: 'infoQuotedPublish'}" tag="span">
+			<router-link :to="{name: 'infoQuotedSave'}" tag="span">
 				<el-button type="primary" icon="plus" size="small">发布信息</el-button>
 			</router-link>
 		</panel-title>
@@ -64,9 +64,9 @@
 					label="操作"
 					width="180">
 					<template slot-scope="props">
-						<router-link :to="{name: 'tableUpdate', params: {id: props.row.id}}" tag="span">
+						<!-- <router-link :to="{name: 'tableUpdate', params: {id: props.row.id}}" tag="span">
 							<el-button type="info" size="small" icon="edit">详情</el-button>
-						</router-link>
+						</router-link> -->
 						<el-button type="danger" size="small" icon="delete" @click="deleteRow(props.row)">删除</el-button>
 					</template>
 				</el-table-column>

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.mcsj.sso.dto.base.PageBean;
+import cn.mcsj.sso.dto.req.ReqCompanyPageQueryBean;
 import cn.mcsj.sso.entity.Company;
 
 public interface ICompanyService{
@@ -19,4 +20,8 @@ public interface ICompanyService{
 	int save(Company company);
 
     int delete(Long primaryKey);
+    
+    PageBean getPublishCompany(ReqCompanyPageQueryBean pageQueryBean);
+    
+    PageBean getReaderCompany(ReqCompanyPageQueryBean pageQueryBean);
 }

@@ -103,7 +103,7 @@ export default {
 						}).catch(() => {
 						});
         },
-				//选择产品列表处理
+				//选择公司选项处理
 				handleSelect(item) {
 						this.infoForm.companyId = item.companyId;
 				},

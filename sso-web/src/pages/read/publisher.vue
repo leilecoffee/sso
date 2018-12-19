@@ -4,26 +4,16 @@
 			<el-button @click.stop="on_refresh" size="small">
 				<i class="fa fa-refresh"></i>
 			</el-button>
-			<router-link :to="{name: 'userInfoPermSave'}" tag="span">
-				<el-button type="primary" icon="plus" size="small">添加授权信息</el-button>
-			</router-link>
 		</panel-title>
 		<div class="panel-body">
 				<el-form :model="searchForm" :inline="true">
-					<el-form-item label="授权表:">
-						<el-select v-model="searchForm.infoPermId" placeholder="请选择">
-							<el-option
-							  v-for="item in permTableOptions"
-							  :key="item.infoPermId"
-							  :label="item.name"
-							  :value="item.infoPermId">
-							</el-option>
-						 </el-select>
-				  </el-form-item>
-				  <el-form-item>
-					<el-button type="primary" @click="userInfoPermQuery">查询</el-button>
-				  </el-form-item>
-				</el-form>
+					<el-form-item label="公司名称:">
+						<el-input v-model="searchForm.companyName" placeholder="支持模糊查询"></el-input>
+					</el-form-item>
+					<el-form-item>
+						<el-button type="primary" @click="query">查询</el-button>
+					</el-form-item>
+				</el-form>	
 			<el-table
 				:data="tableData"
 				v-loading="load_data"
@@ -38,31 +28,17 @@
 				</el-table-column>
 				<el-table-column
 					prop="companyName"
-					label="公司名称"
-					width="300">
+					label="公司名称">
 				</el-table-column>
 				<el-table-column
-					prop="visitTable"
-					label="授权表"
-					width="120">
-				</el-table-column>
-				<el-table-column
-					prop="visitColumn"
-					label="授权列">
-				</el-table-column>
-				<el-table-column
-					prop="createTime"
-					label="创建日期"
-					width="120">
+					prop="companyCode"
+					label="公司代码">
 				</el-table-column>
 				<el-table-column
 					label="操作"
 					width="180">
 					<template slot-scope="props">
-						<!-- <router-link :to="{name: 'userInfoPermUpdate', params: {id: props.row.id}}" tag="span">
-							<el-button type="info" size="small" icon="edit">编辑</el-button>
-						</router-link> -->
-						<el-button type="text" size="small"  @click="deleteRow(props.row)">删除</el-button>
+						<el-button type="text" size="small"  @click="apply(props.row)">申请授权</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -86,6 +62,7 @@
 
 <script>
 	import { panelTitle,bottomToolBar} from 'components';
+	import {infoStateOptions} from 'common/config'
 	import {tools_date} from 'common/tools'
 	export default {
 		data(){
@@ -93,7 +70,7 @@
 				//查询表单
 				searchForm:{},
 				//信息状态选项
-				permTableOptions:[],
+				infoStateOptions:infoStateOptions,
 				tableData: null,
 				//当前页码
 				currentPage: 1,
@@ -102,7 +79,7 @@
 				//每页显示多少条数据
 				length: 10,
 				//请求时的loading效果
-				load_data: false,
+				load_data: true,
 			}
 		},
 		components: {
@@ -110,18 +87,19 @@
 			bottomToolBar
 		},
 		created(){
-			this.userInfoPermQuery();
-			this.loadInfoPermList();
+			this.query();
 		},
 		methods: {
 			//刷新操作
 			on_refresh(){
-				this.userInfoPermQuery();
+				query();
 			},
-			userInfoPermQuery(){
+			query(){
 				this.load_data = true;
-				let param ={"pageNum":this.currentPage,"pageSize":this.length,"infoPermId":this.searchForm.infoPermId};
-				this.$fetch.api.userInfoPermQuery(param).then(({data}) => {
+				let param = this.searchForm;
+				param["pageNum"] = this.currentPage;
+				param["pageSize"] = this.length;
+				this.$fetch.api.companyPublisher(param).then(({data}) => {
 						this.load_data = false;
 						this.tableData = data.rows;
 						this.total = data.total;
@@ -129,41 +107,32 @@
 						this.load_data = false;
 				});
 			},
-			//获取信息授权列表
-			loadInfoPermList(){
-				this.$fetch.api.infoPermList().then(({ data }) => {
-						if (data) {
-								this.permTableOptions = data;
-						}
-				}).catch(() => {
-				});
-			},
+			
 			handleCurrentChange(val){
 				this.currentPage = val;
-				this.userInfoPermQuery();
+				this.query();
 			},
 			handleSizeChange(val){
 				this.currentPage =1;
 				this.length = val;
-				this.userInfoPermQuery();
+				this.query();
 			},
 			indexMethod(index){
 				return index +1;
 			},
-			deleteRow(row){
-				this.$confirm('此操作将删除该数据, 是否继续?', '提示', {
+			apply(row){
+				this.$confirm('此操作将发起授权申请流程, 是否继续?', '提示', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
-					let param ={"id":row.id};
-					this.$fetch.api.userInfoPermDelete(param).then(({data}) => {
-							this.$message.success("刪除成功");
-							this.userInfoPermQuery()
+					let param ={"companyId":row.companyId};
+					this.$fetch.api.applySave(param).then(({data}) => {
+							this.$message.success("申请成功");
+							this.query();
 					}).catch(() => {
 							this.load_data = false;
 					});
-					
 				}).catch(() => {})
 			}
 		}

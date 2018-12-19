@@ -37,3 +37,15 @@ export const infoPermList = "infoPerm/list"
 export const userInfoPermSave="userInfoPerm/save"
 
 export const userInfoPermDelete ="userInfoPerm/delete"
+//获取发布者名单
+export const companyPublisher ="company/publisher"
+//授权申请 新增
+export const applySave = "apply/save"
+//登录人授权申请查询
+export const applyQuery="apply/query"
+//授权申请  授权操作
+export const applyAuthorization="apply/authorization"
+//申请驳回操作
+export const applyReject="apply/reject"
+//获取阅读者名单
+export const companyReader="company/reader"

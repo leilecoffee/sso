@@ -51,7 +51,10 @@ export default {
                         {
                             title: '报价信息',
                             path: '/info/quoted'
-                        },
+                        },{
+													title: '阅读者名单',
+													path: '/info/reader'
+												},
 												{
 														title: '阅读日志',
 														path: '/table/sort'
@@ -68,30 +71,31 @@ export default {
                     child: [
 												{
 														title: '授权处理',
-														path: '/table/base'
-												},
-                        {
+														path: '/permission/apply'
+												},{
                             title: '权限查询',
                             path: '/permission/userInfoPerm'
-                        }
-                    ]
+												}
+										]
                 },{
                     title: '阅读管理',
                     path: '/read',
                     icon: 'fa-table',
                     child: [
-												{
-														title: '发布者名单',
-														path: '/table/base'
-												},
-                        {
-                            title: '上链信息',
-                            path: '/table/base'
-                        },
-                        {
-                            title: '阅读日志',
-                            path: '/table/base'
-                        }
+											{
+													title: '报价信息',
+													path: '/read/publisher'
+											},
+											{
+													title: '发布者名单',
+													path: '/read/publisher'
+											},{
+													title: '上链信息',
+													path: '/table/base'
+											},{
+													title: '阅读日志',
+													path: '/table/base'
+											}
                     ]
                 },
                 {

@@ -35,5 +35,8 @@ public class GlobalConstant {
 	public static final Long ROOT_NODE_ID = 0L;
 
 	
+	public static final String PUBLISH_ROLE_ID = "publish_role_id";
+	
+	public static final String READ_ROLE_ID = "read_role_id";
 	
 }
