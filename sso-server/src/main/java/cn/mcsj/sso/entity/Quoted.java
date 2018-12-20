@@ -6,7 +6,10 @@ public class Quoted {
 
 	private Long id;
 	private Long companyId;
+	private String companyCode;
+	private String companyName;
 	private Long productId;
+	private String productCode;
 	private String productName;
 	private Double price;
 	private Date priceDate;
@@ -103,4 +106,29 @@ public class Quoted {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+
+	public String getCompanyCode() {
+		return companyCode;
+	}
+
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getProductCode() {
+		return productCode;
+	}
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+	
 }

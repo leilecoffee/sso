@@ -20,12 +20,8 @@ import cn.mcsj.sso.dto.base.ResultVO;
 import cn.mcsj.sso.dto.req.ReqQuotedPageQueryBean;
 import cn.mcsj.sso.dto.req.ReqQuotedSaveBean;
 import cn.mcsj.sso.dto.res.ResQuotedBean;
-import cn.mcsj.sso.entity.Company;
-import cn.mcsj.sso.entity.Product;
 import cn.mcsj.sso.entity.Quoted;
 import cn.mcsj.sso.entity.User;
-import cn.mcsj.sso.service.ICompanyService;
-import cn.mcsj.sso.service.IProductService;
 import cn.mcsj.sso.service.IQuotedService;
 import cn.mcsj.sso.util.ApplicationUtil;
 
@@ -35,10 +31,6 @@ public class QuotedController {
 
 	@Autowired
 	private IQuotedService quotedService;
-	@Autowired
-	private IProductService productService;
-	@Autowired
-	private ICompanyService companyService;
 
 	/**
 	 * 新增报价信息
@@ -74,10 +66,8 @@ public class QuotedController {
 		for (Quoted quoted : rows) {
 			ResQuotedBean bean = new ResQuotedBean();
 			BeanUtils.copyProperties(quoted, bean);
-			Product product = productService.getOne(quoted.getProductId());
-			Company company = companyService.getOne(quoted.getCompanyId());
-			bean.setCompanyName(company.getName());
-			bean.setProductName(product.getName());
+			bean.setCompanyName(quoted.getCompanyName());
+			bean.setProductName(quoted.getProductName());
 			data.add(bean);
 		}
 		pageBean.setRows(data);

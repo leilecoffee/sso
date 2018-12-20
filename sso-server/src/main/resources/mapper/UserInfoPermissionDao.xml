@@ -39,6 +39,11 @@
 			<if test="permColumn != null and permColumn !=''">and perm_column = #{permColumn}</if>
 			<if test="permColumnDesc != null and permColumnDesc !=''">and perm_column_desc = #{permColumnDesc}</if>
 			<if test="isDelete != null">and is_delete = #{isDelete}</if>
+			<if test="infoPermIds != null">and info_perm_id in
+				<foreach collection="infoPermIds" index="index" item="item" open="(" separator="," close=")">
+	                #{item}       
+		        </foreach>  
+	        </if> 
 			<if test="createTime != null and createTime !=''">and create_time = #{createTime}</if>
 			<if test="orderByClause != null ">order by  ${orderByClause}</if>
 		</where>

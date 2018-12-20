@@ -84,7 +84,7 @@ export default {
                     child: [
 											{
 													title: '报价信息',
-													path: '/read/publisher'
+													path: '/read/quoted'
 											},
 											{
 													title: '发布者名单',

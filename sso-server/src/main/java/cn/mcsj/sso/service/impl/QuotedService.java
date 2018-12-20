@@ -12,10 +12,14 @@ import org.springframework.stereotype.Service;
 import cn.mcsj.sso.constant.DeleteEnum;
 import cn.mcsj.sso.constant.GlobalConstant;
 import cn.mcsj.sso.constant.ResultCode;
+import cn.mcsj.sso.dao.CompanyDao;
+import cn.mcsj.sso.dao.ProductDao;
 import cn.mcsj.sso.dao.QuotedDao;
 import cn.mcsj.sso.dto.base.PageBean;
 import cn.mcsj.sso.dto.base.ResultVO;
 import cn.mcsj.sso.dto.req.ReqQuotedSaveBean;
+import cn.mcsj.sso.entity.Company;
+import cn.mcsj.sso.entity.Product;
 import cn.mcsj.sso.entity.Quoted;
 import cn.mcsj.sso.entity.User;
 import cn.mcsj.sso.service.IQuotedService;
@@ -26,6 +30,10 @@ public class QuotedService implements IQuotedService {
 
 	@Autowired
 	private QuotedDao quotedDao;
+	@Autowired
+	private CompanyDao companyDao;
+	@Autowired
+	private ProductDao productDao;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -77,8 +85,13 @@ public class QuotedService implements IQuotedService {
 		User user = ApplicationUtil.getCurrentUser();
 		Quoted quoted = new Quoted();
 		quoted.setCompanyId(user.getCompanyId());
+		Company company = companyDao.getOne(user.getCompanyId());
+		quoted.setCompanyCode(company.getCode());
+		quoted.setCompanyName(company.getName());
 		quoted.setProductId(quotedSaveBean.getProductId());
-		quoted.setProductName(quotedSaveBean.getProductName());
+		Product product = productDao.getOne(quotedSaveBean.getProductId());
+		quoted.setProductCode(product.getCode());
+		quoted.setProductName(product.getName());
 		quoted.setPrice(quotedSaveBean.getPrice());
 		quoted.setPriceDate(quotedSaveBean.getPriceDate());
 		quoted.setVisitStartTime(quotedSaveBean.getVisitStartTime());

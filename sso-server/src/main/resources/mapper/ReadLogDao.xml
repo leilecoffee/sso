@@ -7,18 +7,20 @@
     <resultMap id="readLogResultMap" type="ReadLog">
 		<result property="id" column="id" />
 		<result property="userId" column="user_id" />
-		<result property="productTypeId" column="product_type_id" />
-		<result property="productInfoId" column="product_info_id" />
-		<result property="fromCompanyId" column="from_company_id" />
+		<result property="infoPermId" column="info_perm_id" />
+		<result property="infoId" column="info_id" />
+		<result property="publishCompanyId" column="publish_company_id" />
+		<result property="readCompanyId" column="read_company_id" />
 		<result property="createTime" column="create_time" />
 	</resultMap>
 	
 	<sql id="readLogColumns"> 
 			id,
 			user_id,
-			product_type_id,
-			product_info_id,
-			from_company_id,
+			info_perm_id,
+			info_id,
+			publish_company_id,
+			read_company_id,
 			create_time
 	</sql>
 	
@@ -27,9 +29,10 @@
 			1 = 1
 			<if test="id != null and id !=''">and id = #{id}</if>
 			<if test="userId != null and userId !=''">and user_id = #{userId}</if>
-			<if test="productTypeId != null and productTypeId !=''">and product_type_id = #{productTypeId}</if>
-			<if test="productInfoId != null and productInfoId !=''">and product_info_id = #{productInfoId}</if>
-			<if test="fromCompanyId != null and fromCompanyId !=''">and from_company_id = #{fromCompanyId}</if>
+			<if test="infoPermId != null and infoPermId !=''">and info_perm_id = #{infoPermId}</if>
+			<if test="infoId != null and infoId !=''">and info_id = #{infoId}</if>
+			<if test="publishCompanyId != null and publishCompanyId !=''">and publish_company_id = #{publishCompanyId}</if>
+			<if test="readCompanyId != null and readCompanyId !=''">and read_company_id = #{readCompanyId}</if>
 			<if test="createTime != null and createTime !=''">and create_time = #{createTime}</if>
 		</where>
 	</sql>
@@ -61,9 +64,10 @@
 		values(
         #{id},
         #{userId},
-        #{productTypeId},
-        #{productInfoId},
-        #{fromCompanyId},
+        #{infoPermId},
+        #{infoId},
+        #{publishCompanyId},
+        #{readCompanyId},
         #{createTime}
 		)
     </insert>  
@@ -74,14 +78,17 @@
 			<if test="userId != null">
 				user_id = #{userId},
 			</if>
-			<if test="productTypeId != null">
-				product_type_id = #{productTypeId},
+			<if test="infoPermId != null">
+				info_perm_id = #{infoPermId},
 			</if>
-			<if test="productInfoId != null">
-				product_info_id = #{productInfoId},
+			<if test="infoId != null">
+				info_id = #{infoId},
 			</if>
-			<if test="fromCompanyId != null">
-				from_company_id = #{fromCompanyId},
+			<if test="publishCompanyId != null">
+				publish_company_id = #{publishCompanyId},
+			</if>
+			<if test="readCompanyId != null">
+				read_company_id = #{readCompanyId},
 			</if>
 			<if test="createTime != null">
 				create_time = #{createTime},

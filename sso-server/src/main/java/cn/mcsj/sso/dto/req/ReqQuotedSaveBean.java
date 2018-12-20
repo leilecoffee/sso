@@ -7,8 +7,6 @@ import javax.validation.constraints.NotNull;
 public class ReqQuotedSaveBean {
 	@NotNull(message="{product.notNull}")
 	private Long productId;
-	@NotNull(message="{product.notNull}")
-	private String productName;
 	@NotNull(message="{product.price.notNull}")
 	private Double price;
 	@NotNull(message="{product.priceDate.notNull}")
@@ -23,14 +21,6 @@ public class ReqQuotedSaveBean {
 
 	public void setProductId(Long productId) {
 		this.productId = productId;
-	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
 	}
 
 	public Double getPrice() {

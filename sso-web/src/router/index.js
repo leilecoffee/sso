@@ -127,6 +127,14 @@ const routes = [{
       title: "阅读者名单",
       auth: true
     }
+  }, {
+    path: '/read/quoted',
+    name: 'readQuoted',
+    component: resolve => require(['pages/read/info/quoted'], resolve),
+    meta: {
+      title: "报价信息",
+      auth: true
+    }
   }]
 }]
 

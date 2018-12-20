@@ -49,3 +49,7 @@ export const applyAuthorization="apply/authorization"
 export const applyReject="apply/reject"
 //获取阅读者名单
 export const companyReader="company/reader"
+//阅读者获取授权信息
+export const infoQuery = "info/query"
+//阅读者获取授权信息详情
+export const infoDetail = "info/detail"

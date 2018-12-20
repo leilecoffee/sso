@@ -192,3 +192,21 @@ export function companyReader(data){
 		data
 	})
 }
+
+//阅读者获取授权信息
+export function infoQuery(data){
+	return fetch({
+		url: port_sso.infoQuery,
+		method: 'post',
+		data
+	})
+}
+
+//阅读者获取授权信息详情
+export function infoDetail(data){
+	return fetch({
+		url: port_sso.infoDetail,
+		method: 'post',
+		data
+	})
+}

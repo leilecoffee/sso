@@ -159,7 +159,6 @@ export default {
 					}).then(() => {
 						let param = {
 							"productId":this.infoForm.productId,
-							"productName":this.infoForm.productName,
 							"price":this.infoForm.productPrice,
 							"priceDate":this.infoForm.priceDate
 						}

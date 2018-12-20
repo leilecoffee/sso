@@ -6,9 +6,10 @@ public class ReadLog {
 
     private Long id;
     private Long userId;
-    private Long productTypeId;
-    private Long productInfoId;
-    private Long fromCompanyId;
+    private Long infoPermId;
+    private Long infoId;
+    private Long publishCompanyId;
+    private Long readCompanyId;
     private Date createTime;
 
     public Long getId(){
@@ -23,23 +24,29 @@ public class ReadLog {
     public void setUserId(Long userId){
       this.userId = userId;
     }
-    public Long getProductTypeId(){
-      return productTypeId;
+    public Long getInfoPermId(){
+      return infoPermId;
     }
-    public void setProductTypeId(Long productTypeId){
-      this.productTypeId = productTypeId;
+    public void setInfoPermId(Long infoPermId){
+      this.infoPermId = infoPermId;
     }
-    public Long getProductInfoId(){
-      return productInfoId;
+    public Long getInfoId(){
+      return infoId;
     }
-    public void setProductInfoId(Long productInfoId){
-      this.productInfoId = productInfoId;
+    public void setInfoId(Long infoId){
+      this.infoId = infoId;
     }
-    public Long getFromCompanyId(){
-      return fromCompanyId;
+    public Long getPublishCompanyId(){
+      return publishCompanyId;
     }
-    public void setFromCompanyId(Long fromCompanyId){
-      this.fromCompanyId = fromCompanyId;
+    public void setPublishCompanyId(Long publishCompanyId){
+      this.publishCompanyId = publishCompanyId;
+    }
+    public Long getReadCompanyId(){
+      return readCompanyId;
+    }
+    public void setReadCompanyId(Long readCompanyId){
+      this.readCompanyId = readCompanyId;
     }
     public Date getCreateTime(){
       return createTime;

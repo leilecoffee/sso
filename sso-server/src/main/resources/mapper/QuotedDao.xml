@@ -7,7 +7,10 @@
     <resultMap id="quotedResultMap" type="Quoted">
 		<result property="id" column="id" />
 		<result property="companyId" column="company_id" />
+		<result property="companyCode" column="company_code" />
+		<result property="companyName" column="company_name" />
 		<result property="productId" column="product_id" />
+		<result property="productCode" column="product_code" />
 		<result property="productName" column="product_name" />
 		<result property="price" column="price" />
 		<result property="priceDate" column="price_date" />
@@ -21,7 +24,10 @@
 	<sql id="quotedColumns"> 
 			id,
 			company_id,
+			company_code,
+			company_name,
 			product_id,
+			product_code,			
 			product_name,
 			price,
 			price_date,
@@ -35,9 +41,12 @@
 	<sql id="query_Quoted_where">
 		<where>
 			1 = 1
-			<if test="id != null and id !=''">and id = #{id}</if>
-			<if test="companyId != null and companyId !=''">and company_id = #{companyId}</if>
-			<if test="productId != null and productId !=''">and product_id = #{productId}</if>
+			<if test="id != null">and id = #{id}</if>
+			<if test="companyId != null">and company_id = #{companyId}</if>
+			<if test="companyCode != null and companyCode !=''">and company_code = #{companyCode}</if>
+			<if test="companyName != null and companyName !=''">and company_name = #{companyName}</if>
+			<if test="productId != null">and product_id = #{productId}</if>
+			<if test="productCode != null and productCode !=''">and product_code = #{productCode}</if>
 			<if test="productName != null and productName !=''">and product_name = #{productName}</if>
 			<if test="price != null and price !=''">and price = #{price}</if>
 			<if test="priceDate != null and priceDate !=''">and price_date = #{priceDate}</if>
@@ -46,6 +55,17 @@
 			<if test="state != null">and state = #{state}</if>
 			<if test="isDelete != null">and is_delete = #{isDelete}</if>
 			<if test="createTime != null and createTime !=''">and create_time = #{createTime}</if>
+			<if test="companyIds != null">and company_id in
+				<foreach collection="companyIds" index="index" item="item" open="(" separator="," close=")">
+	                #{item}       
+		        </foreach>  
+	        </if> 
+			<if test="startDate != null and startDate !='' and endDate != null and endDate !=''">
+				and (create_time BETWEEN #{startDate} AND #{endDate})
+			</if>
+			<if test="visitPerm != null">
+				and (NOW() BETWEEN visit_start_time AND visit_end_time  or (visit_start_time is null or visit_end_time is null))
+			</if>
 			<if test="orderByClause != null ">order by  ${orderByClause}</if>
 		</where>
 	</sql>
@@ -77,7 +97,10 @@
 		values(
         #{id},
         #{companyId},
+        #{companyCode},
+        #{companyName},
         #{productId},
+        #{productCode}
         #{productName},
         #{price},
         #{priceDate},
