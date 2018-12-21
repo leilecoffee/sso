@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2018-12-19 17:34:06
+Date: 2018-12-21 16:38:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,14 +26,14 @@ CREATE TABLE `t_apply` (
   `state` tinyint(4) DEFAULT NULL COMMENT '0-审核中，1-已审核，2-驳回',
   `reason` text,
   `is_delete` tinyint(4) DEFAULT NULL COMMENT '0-未删除，1-删除',
-  `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`apply_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_apply
 -- ----------------------------
-INSERT INTO `t_apply` VALUES ('2', '3', '1', '1', '', '0', '2018-12-19 16:22:36');
+INSERT INTO `t_apply` VALUES ('4', '3', '1', '1', null, '0', '2018-12-21 10:48:54');
 
 -- ----------------------------
 -- Table structure for t_company
@@ -70,8 +70,7 @@ CREATE TABLE `t_info_permission` (
 -- ----------------------------
 -- Records of t_info_permission
 -- ----------------------------
-INSERT INTO `t_info_permission` VALUES ('1', '报价表', 't_quoted', 'product_name,price,price_date', '产品名称,价格,价格日期', '2018-12-18 18:22:14');
-INSERT INTO `t_info_permission` VALUES ('2', '信息共享', null, null, null, null);
+INSERT INTO `t_info_permission` VALUES ('1', '报价表', 't_quoted', 'companyCode,companyName,productCode,productName,price,priceDate,createTime', '公司编码,公司名称,产品编码,产品名称,价格,价格日期,创建时间', '2018-12-21 10:56:22');
 
 -- ----------------------------
 -- Table structure for t_menu
@@ -86,11 +85,23 @@ CREATE TABLE `t_menu` (
   `sort` tinyint(4) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_menu
 -- ----------------------------
+INSERT INTO `t_menu` VALUES ('1', '主页', 'fa-home', '0', '/home', '0', '2018-12-21 10:16:39');
+INSERT INTO `t_menu` VALUES ('2', '信息管理', 'fa-table', '0', '/info', '1', '2018-12-21 10:17:32');
+INSERT INTO `t_menu` VALUES ('3', '授权管理', 'fa-table', '0', '/perm', '2', '2018-12-21 10:18:04');
+INSERT INTO `t_menu` VALUES ('4', '阅读管理', 'fa-table', '0', '/read', '3', '2018-12-21 10:18:32');
+INSERT INTO `t_menu` VALUES ('5', '报价信息', null, '2', '/info/quoted', '4', '2018-12-21 10:18:58');
+INSERT INTO `t_menu` VALUES ('6', '阅读者名单', null, '2', '/info/reader', '5', '2018-12-21 10:19:15');
+INSERT INTO `t_menu` VALUES ('7', '阅读日志', null, '2', '/info/readLog', '6', '2018-12-21 10:19:32');
+INSERT INTO `t_menu` VALUES ('8', '授权处理', null, '3', '/permission/apply', '7', '2018-12-21 10:20:09');
+INSERT INTO `t_menu` VALUES ('9', '权限查询', null, '3', '/permission/userInfoPerm', '8', '2018-12-21 10:20:11');
+INSERT INTO `t_menu` VALUES ('10', '报价信息', null, '4', '/read/quoted', '9', '2018-12-21 10:20:32');
+INSERT INTO `t_menu` VALUES ('11', '发布者名单', null, '4', '/read/publisher', '10', '2018-12-21 10:21:13');
+INSERT INTO `t_menu` VALUES ('12', '阅读日志', null, '4', '/read/readLog', '11', '2018-12-21 10:21:15');
 
 -- ----------------------------
 -- Table structure for t_permission
@@ -151,39 +162,30 @@ INSERT INTO `t_product_type` VALUES ('1', '贵金属', '2018-12-17 14:57:06');
 DROP TABLE IF EXISTS `t_quoted`;
 CREATE TABLE `t_quoted` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
   `company_id` int(11) DEFAULT NULL,
+  `company_code` varchar(120) DEFAULT NULL,
+  `company_name` varchar(120) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
+  `product_code` varchar(120) DEFAULT NULL,
   `product_name` varchar(120) DEFAULT NULL,
+  `product_type_id` int(11) DEFAULT NULL,
+  `product_type` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `product_desc` text,
   `price` decimal(10,2) DEFAULT NULL,
-  `price_date` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `visit_start_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '授权访问开始时间',
-  `visit_end_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '授权访问结束时间',
+  `price_date` datetime DEFAULT NULL,
+  `visit_start_time` datetime DEFAULT NULL COMMENT '授权访问开始时间',
+  `visit_end_time` datetime DEFAULT NULL COMMENT '授权访问结束时间',
   `state` tinyint(4) DEFAULT NULL COMMENT '0-创建，1-已上链',
   `is_delete` tinyint(4) DEFAULT NULL COMMENT '0-有效 ，1-已删除',
-  `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_quoted
 -- ----------------------------
-INSERT INTO `t_quoted` VALUES ('1', '1', '1', '成色不低于99.95％黄金', '0.40', '2018-12-18 15:18:35', '2018-12-18 15:18:35', '2018-12-18 15:18:35', '0', '1', '2018-12-18 15:18:35');
-INSERT INTO `t_quoted` VALUES ('2', '1', '1', '成色不低于99.95％黄金', '10.23', '2018-12-18 15:18:36', '2018-12-18 15:18:36', '2018-12-18 15:18:36', '0', '0', '2018-12-18 15:18:36');
-INSERT INTO `t_quoted` VALUES ('3', '1', '1', '成色不低于99.95％黄金', '0.30', '2018-12-18 15:18:37', '2018-12-18 15:18:37', '2018-12-18 15:18:37', '0', '0', '2018-12-18 15:18:37');
-INSERT INTO `t_quoted` VALUES ('4', '1', '1', '成色不低于99.95％黄金', '0.50', '2018-12-18 15:18:38', '2018-12-18 15:18:38', '2018-12-18 15:18:38', '0', '0', '2018-12-18 15:18:38');
-INSERT INTO `t_quoted` VALUES ('5', '1', '1', '成色不低于99.95％黄金', '0.30', '2018-12-18 15:18:38', '2018-12-18 15:18:38', '2018-12-18 15:18:38', '0', '0', '2018-12-18 15:18:38');
-INSERT INTO `t_quoted` VALUES ('6', '1', '1', '成色不低于99.95％黄金', '0.20', '2018-12-18 15:18:39', '2018-12-18 15:18:39', '2018-12-18 15:18:39', '0', '0', '2018-12-18 15:18:39');
-INSERT INTO `t_quoted` VALUES ('7', '1', '1', '成色不低于99.95％黄金', '0.00', '2018-12-18 15:18:40', '2018-12-18 15:18:40', '2018-12-18 15:18:40', '0', '0', '2018-12-18 15:18:40');
-INSERT INTO `t_quoted` VALUES ('8', '1', '1', '成色不低于99.95％黄金', '0.30', '2018-12-18 15:18:41', '2018-12-18 15:18:41', '2018-12-18 15:18:41', '0', '0', '2018-12-18 15:18:41');
-INSERT INTO `t_quoted` VALUES ('9', '1', '1', '成色不低于99.95％黄金', '1.10', '2018-12-18 15:18:42', '2018-12-18 15:18:42', '2018-12-18 15:18:42', '0', '0', '2018-12-18 15:18:42');
-INSERT INTO `t_quoted` VALUES ('10', '1', '1', '成色不低于99.95％黄金', '0.30', '2018-12-18 15:18:42', '2018-12-18 15:18:42', '2018-12-18 15:18:42', '0', '0', '2018-12-18 15:18:42');
-INSERT INTO `t_quoted` VALUES ('12', '1', '1', '成色不低于99.95％黄金', '0.30', '2018-12-18 15:18:44', '2018-12-18 15:18:44', '2018-12-18 15:18:44', '0', '0', '2018-12-18 15:18:44');
-INSERT INTO `t_quoted` VALUES ('13', '1', '1', '成色不低于99.95％黄金', '0.00', '2018-12-18 15:18:45', '2018-12-18 15:18:45', '2018-12-18 15:18:45', '0', '1', '2018-12-18 15:18:45');
-INSERT INTO `t_quoted` VALUES ('14', '1', '1', '成色不低于99.95％黄金', '0.00', '2018-12-18 15:18:46', '2018-12-18 15:18:46', '2018-12-18 15:18:46', '0', '1', '2018-12-18 15:18:46');
-INSERT INTO `t_quoted` VALUES ('15', '1', '1', '成色不低于99.95％黄金', '0.30', '2018-12-18 15:18:47', '2018-12-18 15:18:47', '2018-12-18 15:18:47', '0', '0', '2018-12-18 15:18:47');
-INSERT INTO `t_quoted` VALUES ('16', '1', '1', '成色不低于99.95％黄金', '0.50', '2018-12-18 15:18:48', '2018-12-18 15:18:48', '2018-12-18 15:18:48', '0', '0', '2018-12-18 15:18:48');
-INSERT INTO `t_quoted` VALUES ('17', '1', '1', '成色不低于99.95％黄金', '0.00', '2018-12-18 15:18:50', '2018-12-18 15:18:50', '2018-12-18 15:18:50', '0', '0', '2018-12-18 15:18:50');
-INSERT INTO `t_quoted` VALUES ('18', '1', '1', '成色不低于99.95％黄金', '0.00', '2018-12-19 00:00:00', '2018-12-19 00:00:00', '2019-01-31 00:00:00', '0', '0', '2018-12-19 10:00:25');
+INSERT INTO `t_quoted` VALUES ('20', '2', '1', '91440300MA5EUCXT22', '(发布)金荣中国金融业有限公司', '1', 'AUX.CNY', '成色不低于99.95％黄金', null, null, null, '0.00', '2018-12-21 00:00:00', '2018-12-21 00:00:00', '2019-01-31 00:00:00', '0', '1', '2018-12-21 10:53:00');
 
 -- ----------------------------
 -- Table structure for t_read_log
@@ -192,16 +194,19 @@ DROP TABLE IF EXISTS `t_read_log`;
 CREATE TABLE `t_read_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL COMMENT '阅读者ID',
-  `product_type_id` int(11) DEFAULT NULL COMMENT '产品类型',
-  `product_info_id` int(11) DEFAULT NULL COMMENT '产品消息ID',
-  `from_company_id` int(11) DEFAULT NULL,
+  `info_perm_id` int(11) DEFAULT NULL COMMENT '产品类型',
+  `info_id` int(11) DEFAULT NULL COMMENT '产品消息ID',
+  `publish_company_id` int(11) DEFAULT NULL,
+  `read_company_id` int(11) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_read_log
 -- ----------------------------
+INSERT INTO `t_read_log` VALUES ('5', '3', '1', null, '1', '2', '2018-12-21 10:57:39');
+INSERT INTO `t_read_log` VALUES ('6', '3', '1', '20', '1', '2', '2018-12-21 11:00:51');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -231,11 +236,22 @@ CREATE TABLE `t_role_menu` (
   `menu_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `Idx_roleId` (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_role_menu
 -- ----------------------------
+INSERT INTO `t_role_menu` VALUES ('1', '1', '2');
+INSERT INTO `t_role_menu` VALUES ('2', '1', '3');
+INSERT INTO `t_role_menu` VALUES ('3', '1', '5');
+INSERT INTO `t_role_menu` VALUES ('4', '1', '6');
+INSERT INTO `t_role_menu` VALUES ('5', '1', '7');
+INSERT INTO `t_role_menu` VALUES ('6', '1', '8');
+INSERT INTO `t_role_menu` VALUES ('7', '1', '9');
+INSERT INTO `t_role_menu` VALUES ('8', '2', '4');
+INSERT INTO `t_role_menu` VALUES ('9', '2', '10');
+INSERT INTO `t_role_menu` VALUES ('10', '2', '11');
+INSERT INTO `t_role_menu` VALUES ('11', '2', '12');
 
 -- ----------------------------
 -- Table structure for t_role_permission
@@ -247,11 +263,22 @@ CREATE TABLE `t_role_permission` (
   `permission_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `Idx_roleId` (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_role_permission
 -- ----------------------------
+INSERT INTO `t_role_permission` VALUES ('1', '1', '2');
+INSERT INTO `t_role_permission` VALUES ('2', '1', '3');
+INSERT INTO `t_role_permission` VALUES ('3', '1', '5');
+INSERT INTO `t_role_permission` VALUES ('4', '1', '6');
+INSERT INTO `t_role_permission` VALUES ('5', '1', '7');
+INSERT INTO `t_role_permission` VALUES ('6', '1', '8');
+INSERT INTO `t_role_permission` VALUES ('7', '1', '9');
+INSERT INTO `t_role_permission` VALUES ('8', '2', '4');
+INSERT INTO `t_role_permission` VALUES ('9', '2', '10');
+INSERT INTO `t_role_permission` VALUES ('10', '2', '11');
+INSERT INTO `t_role_permission` VALUES ('11', '2', '12');
 
 -- ----------------------------
 -- Table structure for t_system_constant
@@ -265,13 +292,14 @@ CREATE TABLE `t_system_constant` (
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `Idx_code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_system_constant
 -- ----------------------------
 INSERT INTO `t_system_constant` VALUES ('1', 'publish_role_id', '1', null, null);
 INSERT INTO `t_system_constant` VALUES ('2', 'read_role_id', '2', null, null);
+INSERT INTO `t_system_constant` VALUES ('3', 'info_type_quoted', '1', null, null);
 
 -- ----------------------------
 -- Table structure for t_user
@@ -313,12 +341,12 @@ CREATE TABLE `t_user_info_permission` (
   `is_delete` tinyint(4) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_user_info_permission
 -- ----------------------------
-INSERT INTO `t_user_info_permission` VALUES ('5', '2', '1', '2', '1', 'product_name,price,price_date', '产品名称,价格,价格日期', '0', '2018-12-19 16:22:36');
+INSERT INTO `t_user_info_permission` VALUES ('6', '2', '1', '2', '1', 'companyCode,companyName,productCode,productName,price,priceDate,createTime', '公司编码,公司名称,产品编码,产品名称,价格,价格日期,创建时间', '1', '2018-12-21 16:36:16');
 
 -- ----------------------------
 -- Table structure for t_user_role

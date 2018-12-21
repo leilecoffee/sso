@@ -1,22 +1,22 @@
 <template>
 	<div class="panel">
 		<panel-title :title="$route.meta.title">
-			<el-button @click.stop="on_refresh" size="small">
+			<el-button @click.stop="on_refresh" size="medium">
 				<i class="fa fa-refresh"></i>
 			</el-button>
 		</panel-title>
 		<div class="panel-body">
-				<el-form :model="searchForm" :inline="true">
+				<el-form class="search" :model="searchForm" :inline="true">
 					<el-form-item label="公司名称:">
 						<el-input v-model="searchForm.companyName" placeholder="支持模糊查询"></el-input>
 					</el-form-item>
 					<el-form-item>
-						<el-button type="primary" @click="query">查询</el-button>
+						<el-button type="primary" size="medium"  @click="query">查询</el-button>
 					</el-form-item>
 				</el-form>
-			<el-row style="text-align: right;margin-right: 10px;">
+			<el-row class="table-function">
 				<el-col>
-					<el-button type="primary"  size="small"  @click="exportFile()">导出</el-button>
+					<el-button type="primary"  size="medium"  @click="exportFile()">导出</el-button>
 				</el-col>
 			</el-row>
 			<el-table
@@ -28,32 +28,39 @@
 				<el-table-column
 					label="序号"
 					type="index"
+					align="center"
 					:index="indexMethod"
 					width="80">
 				</el-table-column>
 				<el-table-column
 					prop="publishCompanyName"
+					align="center"
 					label="发布公司名称">
 				</el-table-column>
 				<el-table-column
 					prop="publisher"
+					align="center"
 					label="发布人">
 				</el-table-column>
 				<el-table-column
 					prop="reader"
+					align="center"
 					label="阅读人">
 				</el-table-column>
 				<el-table-column
 					prop="readTime"
+					align="center"
 					label="阅读时间">
 				</el-table-column>
 				<el-table-column
 					prop="infoType"
 					label="授权表"
+					align="center"
 					width="120">
 				</el-table-column>
 				<el-table-column
 					prop="infoId"
+					align="center"
 					label="信息ID"
 					width="120">
 				</el-table-column>

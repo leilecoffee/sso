@@ -16,7 +16,7 @@
             <el-input type="password" v-model="form.password" placeholder="请输入账户密码：" class="form-input"></el-input>
           </el-form-item>
           <el-form-item class="login-item">
-            <el-button size="large" icon="check" class="form-submit" @click="submit_form"></el-button>
+            <el-button size="large" type="primary" class="form-submit" @click="submit_form">登陆</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -81,14 +81,14 @@
     top: 0;
     width: 100%;
     height: 100%;
-    background-image: url(./images/login_bg.jpg);
+    // background-image: url(./images/login_bg.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     .loginWarp {
       width: 300px;
       padding: 25px 15px;
-      margin: 100px auto;
+      margin: 200px auto;
       background-color: #fff;
       border-radius: 5px;
       .login-title {
@@ -113,13 +113,6 @@
       }
       .form-submit {
         width: 100%;
-        color: #fff;
-        border-color: #6bc5a4;
-        background: #6bc5a4;
-        &:active, &:hover {
-          border-color: #6bc5a4;
-          background: #6bc5a4;
-        }
       }
     }
   }

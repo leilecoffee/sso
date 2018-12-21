@@ -24,7 +24,7 @@
               :index="sub_item.path"
               :key="sub_index">
               <!--<i class="icon fa" :class="sub_item.icon"></i>-->
-              <span v-text="sub_item.title" class="text"></span>
+              <span v-text="sub_item.title" class="subText"></span>
             </el-menu-item>
           </el-submenu>
         </div>
