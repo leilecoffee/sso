@@ -4,26 +4,21 @@
 			<el-button @click.stop="on_refresh" size="small">
 				<i class="fa fa-refresh"></i>
 			</el-button>
-			<router-link :to="{name: 'infoQuotedSave'}" tag="span">
-				<el-button type="primary" icon="plus" size="small">发布信息</el-button>
-			</router-link>
 		</panel-title>
 		<div class="panel-body">
 				<el-form :model="searchForm" :inline="true">
-					<el-form-item label="信息状态:">
-						<el-select v-model="searchForm.state" placeholder="请选择">
-							<el-option
-							  v-for="item in infoStateOptions"
-							  :key="item.value"
-							  :label="item.label"
-							  :value="item.value">
-							</el-option>
-						 </el-select>
-				  </el-form-item>
-				  <el-form-item>
-					<el-button type="primary" @click="quotedUserQuery">查询</el-button>
-				  </el-form-item>
-				</el-form>	
+					<el-form-item label="公司名称:">
+						<el-input v-model="searchForm.companyName" placeholder="支持模糊查询"></el-input>
+					</el-form-item>
+					<el-form-item>
+						<el-button type="primary" @click="query">查询</el-button>
+					</el-form-item>
+				</el-form>
+			<el-row style="text-align: right;margin-right: 10px;">
+				<el-col>
+					<el-button type="primary"  size="small"  @click="exportFile()">导出</el-button>
+				</el-col>
+			</el-row>
 			<el-table
 				:data="tableData"
 				v-loading="load_data"
@@ -37,39 +32,39 @@
 					width="80">
 				</el-table-column>
 				<el-table-column
-					prop="companyName"
-					label="公司名称"
-					width="300">
+					prop="publishCompanyName"
+					label="发布公司名称">
 				</el-table-column>
 				<el-table-column
-					prop="productName"
-					label="产品名称">
+					prop="publisher"
+					label="发布人">
 				</el-table-column>
 				<el-table-column
-					prop="price"
-					label="价格"
+					prop="reader"
+					label="阅读人">
+				</el-table-column>
+				<el-table-column
+					prop="readTime"
+					label="阅读时间">
+				</el-table-column>
+				<el-table-column
+					prop="infoType"
+					label="授权表"
 					width="120">
 				</el-table-column>
 				<el-table-column
-					prop="priceDate"
-					label="价格日期"
+					prop="infoId"
+					label="信息ID"
 					width="120">
 				</el-table-column>
-				<el-table-column
-					prop="createTime"
-					label="创建日期"
-					width="120">
-				</el-table-column>
-				<el-table-column
+				<!-- <el-table-column
+					:v-show="false"
 					label="操作"
 					width="180">
 					<template slot-scope="props">
-						<!-- <router-link :to="{name: 'tableUpdate', params: {id: props.row.id}}" tag="span">
-							<el-button type="info" size="small" icon="edit">详情</el-button>
-						</router-link> -->
-						<el-button type="danger" size="small" icon="delete" @click="deleteRow(props.row)">删除</el-button>
+						<el-button type="text" size="small"  @click="detail(props.row)">信息详情</el-button>
 					</template>
-				</el-table-column>
+				</el-table-column> -->
 			</el-table>
 			<bottom-tool-bar>
 				<div slot="page">
@@ -91,15 +86,11 @@
 
 <script>
 	import { panelTitle,bottomToolBar} from 'components';
-	import {infoStateOptions} from 'common/config'
-	import {tools_date} from 'common/tools'
 	export default {
 		data(){
 			return {
 				//查询表单
 				searchForm:{},
-				//信息状态选项
-				infoStateOptions:infoStateOptions,
 				tableData: null,
 				//当前页码
 				currentPage: 1,
@@ -108,7 +99,7 @@
 				//每页显示多少条数据
 				length: 10,
 				//请求时的loading效果
-				load_data: false,
+				load_data: true,
 			}
 		},
 		components: {
@@ -116,16 +107,19 @@
 			bottomToolBar
 		},
 		created(){
+			this.query();
 		},
 		methods: {
 			//刷新操作
 			on_refresh(){
-				this.quotedUserQuery();
+				this.query();
 			},
-			quotedUserQuery(){
-				this.load_data = true;
-				let param ={"pageNum":this.currentPage,"pageSize":this.length,"state":this.searchForm.state};
-				this.$fetch.api.quotedQuery(param).then(({data}) => {
+			query(){
+				this.load_data = false;
+				let param = this.searchForm;
+				param["pageNum"] = this.currentPage;
+				param["pageSize"] = this.length;
+				this.$fetch.api.readlogRead(param).then(({data}) => {
 						this.load_data = false;
 						this.tableData = data.rows;
 						this.total = data.total;
@@ -133,34 +127,29 @@
 						this.load_data = false;
 				});
 			},
-			
 			handleCurrentChange(val){
 				this.currentPage = val;
-				this.quotedUserQuery();
+				this.query();
 			},
 			handleSizeChange(val){
 				this.currentPage =1;
 				this.length = val;
-				this.quotedUserQuery();
+				this.query();
 			},
 			indexMethod(index){
 				return index +1;
 			},
-			deleteRow(row){
-				this.$confirm('此操作将删除该数据, 是否继续?', '提示', {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
-					let param ={"id":row.id};
-					this.$fetch.api.quotedDelete(param).then(({data}) => {
-							this.$message.success("刪除成功");
-							this.quotedUserQuery()
-					}).catch(() => {
-							this.load_data = false;
-					});
-					
-				}).catch(() => {})
+			detail(row){
+				let param ={"infoId":row.id,"infoType":1};
+				this.$fetch.api.infoDetail(param).then(({data}) => {
+						this.$message.success("操作成功");
+						this.query();
+				}).catch(() => {
+						this.load_data = false;
+				});
+			},
+			exportFile(){
+				
 			}
 		}
 	}

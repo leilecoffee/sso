@@ -37,7 +37,7 @@
 				</el-table-column>
 				<el-table-column
 					prop="companyCode"
-					label="公司代码">
+					label="公司编码">
 				</el-table-column>
 				<el-table-column
 					prop="productName"
@@ -45,12 +45,11 @@
 				</el-table-column>
 				<el-table-column
 					prop="productName"
-					label="产品代码">
+					label="产品编码">
 				</el-table-column>
 				<el-table-column
 					prop="createTime"
-					label="创建日期"
-					width="120">
+					label="创建日期">
 				</el-table-column>
 				<el-table-column
 					label="操作"
@@ -89,7 +88,7 @@
 		methods: {
 			//刷新操作
 			on_refresh(){
-				query();
+				this.query();
 			},
 			query(){
 				this.load_data = false;
@@ -115,7 +114,12 @@
 				});
 			},
 			exportFile(){
-				
+				let param = this.searchForm;
+				param.infoTypes = ['1'];
+				this.$fetch.api.infoExport(param).then((res) => { // 处理返回的文件流
+				}).catch(() => {
+						this.load_data = false;
+				});
 			}
 		}
 	}

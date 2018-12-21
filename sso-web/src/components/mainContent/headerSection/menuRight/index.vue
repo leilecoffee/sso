@@ -20,12 +20,12 @@
               <span>修改密码</span>
             </a>
           </el-dropdown-item>
-          <el-dropdown-item class="dropdown-list">
+          <!-- <el-dropdown-item class="dropdown-list">
             <a href="javascript:" class="dropdown-btn" @click="setting()">
               <i class="icon fa fa-cog"></i>
               <span>设置</span>
             </a>
-          </el-dropdown-item>
+          </el-dropdown-item> -->
           <el-dropdown-item class="dropdown-list">
             <a href="javascript:" class="dropdown-btn" @click="logout()">
               <i class="icon fa fa-sign-out"></i>

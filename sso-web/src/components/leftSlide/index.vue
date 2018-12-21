@@ -2,7 +2,7 @@
   <div class="left-side">
     <div class="left-side-inner">
       <router-link to="/" class="logo block">
-        <img src="./images/logo.png" alt="小样">
+        <img src="./images/logo.png">
       </router-link>
       <el-menu class="menu-box" theme="dark" router :default-active="$route.path">
         <div v-for="(item, index) in nav_menu_data" :key="index">
@@ -37,84 +37,20 @@ export default {
     name: 'slide',
     data() {
         return {
-            nav_menu_data: [
-                {
-                    title: '主页',
-                    path: '/home',
-                    icon: 'fa-home'
-                },
-                {
-                    title: '信息管理',
-                    path: '/table',
-                    icon: 'fa-table',
-                    child: [
-                        {
-                            title: '报价信息',
-                            path: '/info/quoted'
-                        },{
-													title: '阅读者名单',
-													path: '/info/reader'
-												},
-												{
-														title: '阅读日志',
-														path: '/table/sort'
-												},
-												{
-														title: '上链日志',
-														path: '/table/sort'
-												}
-                    ]
-                },{
-                    title: '授权管理',
-                    path: '/perm',
-                    icon: 'fa-table',
-                    child: [
-												{
-														title: '授权处理',
-														path: '/permission/apply'
-												},{
-                            title: '权限查询',
-                            path: '/permission/userInfoPerm'
-												}
-										]
-                },{
-                    title: '阅读管理',
-                    path: '/read',
-                    icon: 'fa-table',
-                    child: [
-											{
-													title: '报价信息',
-													path: '/read/quoted'
-											},
-											{
-													title: '发布者名单',
-													path: '/read/publisher'
-											},{
-													title: '上链信息',
-													path: '/table/base'
-											},{
-													title: '阅读日志',
-													path: '/table/base'
-											}
-                    ]
-                },
-                {
-                    title: '统计管理',
-                    path: '/charts',
-                    icon: 'fa-bar-chart-o',
-                    child: [
-                        {
-                            title: '统计',
-                            path: '/charts/bar'
-                        }
-                    ]
-                }
-            ]
+            nav_menu_data: []
         };
     },
     created() {
+			this.menu();
     },
     methods: {
+			menu(){
+					this.$fetch.api.menu().then(({data}) => {
+							if(data){
+								this.nav_menu_data = data.child;
+							}
+					}).catch(() => {});
+			}
 		}
 };
 </script>

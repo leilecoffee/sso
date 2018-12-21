@@ -19,4 +19,5 @@ public interface IReadLogService{
 	int save(ReadLog readLog);
 
     int delete(Long primaryKey);
+    
 }

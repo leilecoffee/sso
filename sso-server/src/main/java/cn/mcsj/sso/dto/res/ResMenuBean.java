@@ -10,7 +10,9 @@ public class ResMenuBean {
 	@JSONField(ordinal = 1)
 	private String title;
 	@JSONField(ordinal = 2)
-	private String url;
+	private String path;
+	@JSONField(ordinal = 2)
+	private String icon;
 	@JSONField(ordinal = 4)
 	private List<ResMenuBean> child;
 
@@ -18,10 +20,11 @@ public class ResMenuBean {
 
 	}
 
-	public ResMenuBean(Long id, String title, String url) {
+	public ResMenuBean(Long id, String title,String icon, String path) {
 		this.id = id;
 		this.title = title;
-		this.url = url;
+		this.icon = icon;
+		this.path = path;
 	}
 
 	public Long getId() {
@@ -40,12 +43,20 @@ public class ResMenuBean {
 		this.title = title;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getPath() {
+		return path;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 	public List<ResMenuBean> getChild() {

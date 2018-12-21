@@ -85,7 +85,7 @@
 		methods: {
 			//刷新操作
 			on_refresh(){
-				query();
+				this.query();
 			},
 			query(){
 				this.load_data = true;

@@ -5,12 +5,16 @@ import java.util.Date;
 public class Quoted {
 
 	private Long id;
+	private Long userId;
 	private Long companyId;
 	private String companyCode;
 	private String companyName;
 	private Long productId;
 	private String productCode;
 	private String productName;
+	private Long productTypeId;
+	private String productType;
+	private String productDesc;
 	private Double price;
 	private Date priceDate;
 	private Date visitStartTime;
@@ -25,6 +29,14 @@ public class Quoted {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public Long getCompanyId() {
@@ -49,6 +61,30 @@ public class Quoted {
 
 	public void setProductName(String productName) {
 		this.productName = productName;
+	}
+
+	public Long getProductTypeId() {
+		return productTypeId;
+	}
+
+	public void setProductTypeId(Long productTypeId) {
+		this.productTypeId = productTypeId;
+	}
+
+	public String getProductType() {
+		return productType;
+	}
+
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+
+	public String getProductDesc() {
+		return productDesc;
+	}
+
+	public void setProductDesc(String productDesc) {
+		this.productDesc = productDesc;
 	}
 
 	public Double getPrice() {
@@ -130,5 +166,5 @@ public class Quoted {
 	public void setProductCode(String productCode) {
 		this.productCode = productCode;
 	}
-	
+
 }

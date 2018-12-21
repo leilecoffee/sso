@@ -36,7 +36,7 @@ public class SystemController {
 	public ResultVO getMenu() {
 		User user = ApplicationUtil.getCurrentUser();
 		List<Menu> menuList = menuService.getMenuByUserId(user.getUserId());
-		ResMenuBean menuBean = new ResMenuBean(GlobalConstant.ROOT_NODE_ID, null, null);
+		ResMenuBean menuBean = new ResMenuBean(GlobalConstant.ROOT_NODE_ID, null, null,null);
 		convert(menuBean, menuList);
 		return new ResultVO(menuBean);
 	}
@@ -58,7 +58,7 @@ public class SystemController {
 				if (childs == null) {
 					childs = new ArrayList<ResMenuBean>();
 				}
-				childs.add(new ResMenuBean(m.getMenuId(), m.getName(), m.getUrl()));
+				childs.add(new ResMenuBean(m.getMenuId(), m.getName(),m.getIcon(), m.getUrl()));
 				it.remove();
 				menuBean.setChild(childs);
 			}

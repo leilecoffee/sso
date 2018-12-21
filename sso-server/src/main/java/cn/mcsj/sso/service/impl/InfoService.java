@@ -40,7 +40,7 @@ public class InfoService implements IInfoService {
 
 	@SuppressWarnings({ "unchecked", "serial" })
 	@Override
-	public ResultVO readerQuery(ReqInfoQueryBean queryBean) {
+	public List<ResInfoQueryBean> readerQuery(ReqInfoQueryBean queryBean) {
 		User user = ApplicationUtil.getCurrentUser();
 		List<Long> infoPermIds = queryBean.getInfoTypes();
 		// 查询登录人公司的授权记录
@@ -103,6 +103,7 @@ public class InfoService implements IInfoService {
 							String[] ignoreArray = new String[ignoreList.size()];
 							ignoreList.toArray(ignoreArray);
 							BeanUtils.copyProperties(quoted, item, ignoreArray);
+							item.setId(quoted.getId());
 							break;
 						}
 					}
@@ -118,7 +119,7 @@ public class InfoService implements IInfoService {
 			}
 		}
 
-		return new ResultVO(resultData);
+		return resultData;
 	}
 
 	@SuppressWarnings("unchecked")

@@ -22,6 +22,21 @@ export function logout() {
 	})
 }
 
+//获取登录人菜单
+export function menu() {
+	return fetch({
+		url: port_sso.menu,
+		method: 'post'
+	})
+}
+
+//获取登录人权限编码
+export function permcode() {
+	return fetch({
+		url: port_sso.permcode,
+		method: 'post'
+	})
+}
 //个人中心
 export function userinfo() {
 	return fetch({
@@ -202,10 +217,37 @@ export function infoQuery(data){
 	})
 }
 
-//阅读者获取授权信息详情
+//阅读者获取授权信息
 export function infoDetail(data){
 	return fetch({
 		url: port_sso.infoDetail,
+		method: 'post',
+		data
+	})
+}
+
+//阅读者导出授权信息
+export function infoExport(data){
+	return fetch({
+		url: port_sso.infoExport,
+		method: 'post',
+		data
+	})
+}
+
+//发布者-阅读日志
+export function readlogPublish(data){
+	return fetch({
+		url: port_sso.readlogPublish,
+		method: 'post',
+		data
+	})
+}
+
+//阅读者-阅读日志
+export function readlogRead(data){
+	return fetch({
+		url: port_sso.readlogRead,
 		method: 'post',
 		data
 	})

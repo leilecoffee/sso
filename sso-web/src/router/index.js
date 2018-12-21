@@ -88,6 +88,22 @@ const routes = [{
       auth: true
     }
   },{
+    path: '/info/reader',
+    name: 'infoReader',
+    component: resolve => require(['pages/info/reader'], resolve),
+    meta: {
+      title: "阅读者名单",
+      auth: true
+    }
+  },{
+    path: '/info/readLog',
+    name: 'infoReadLog',
+    component: resolve => require(['pages/info/readLog'], resolve),
+    meta: {
+      title: "阅读日志",
+      auth: true
+    }
+  },{
     path: '/permission/apply',
     name: 'permissionApply',
     component: resolve => require(['pages/permission/apply/table'], resolve),
@@ -103,7 +119,7 @@ const routes = [{
       title: "权限查询",
       auth: true
     }
-  }, {
+  },{
     path: '/permission/userInfoPermSave',
     name: 'userInfoPermSave',
     component: resolve => require(['pages/permission/userInfoPerm/save'], resolve),
@@ -111,7 +127,15 @@ const routes = [{
       title: "添加授权信息",
       auth: true
     }
-  }, {
+  },{
+    path: '/read/quoted',
+    name: 'readQuoted',
+    component: resolve => require(['pages/read/info/quoted'], resolve),
+    meta: {
+      title: "报价信息",
+      auth: true
+    }
+  },{
     path: '/read/publisher',
     name: 'readPublisher',
     component: resolve => require(['pages/read/publisher'], resolve),
@@ -119,20 +143,12 @@ const routes = [{
       title: "发布者名单",
       auth: true
     }
-  }, {
-    path: '/info/reader',
-    name: 'infoReader',
-    component: resolve => require(['pages/info/reader'], resolve),
+  },{
+    path: '/read/readLog',
+    name: 'readReadLog',
+    component: resolve => require(['pages/read/readLog'], resolve),
     meta: {
-      title: "阅读者名单",
-      auth: true
-    }
-  }, {
-    path: '/read/quoted',
-    name: 'readQuoted',
-    component: resolve => require(['pages/read/info/quoted'], resolve),
-    meta: {
-      title: "报价信息",
+      title: "阅读日志",
       auth: true
     }
   }]

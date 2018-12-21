@@ -27,12 +27,12 @@
 	<sql id="query_ReadLog_where">
 		<where>
 			1 = 1
-			<if test="id != null and id !=''">and id = #{id}</if>
-			<if test="userId != null and userId !=''">and user_id = #{userId}</if>
-			<if test="infoPermId != null and infoPermId !=''">and info_perm_id = #{infoPermId}</if>
-			<if test="infoId != null and infoId !=''">and info_id = #{infoId}</if>
-			<if test="publishCompanyId != null and publishCompanyId !=''">and publish_company_id = #{publishCompanyId}</if>
-			<if test="readCompanyId != null and readCompanyId !=''">and read_company_id = #{readCompanyId}</if>
+			<if test="id != null">and id = #{id}</if>
+			<if test="userId != null">and user_id = #{userId}</if>
+			<if test="infoPermId != null">and info_perm_id = #{infoPermId}</if>
+			<if test="infoId != null">and info_id = #{infoId}</if>
+			<if test="publishCompanyId != null">and publish_company_id = #{publishCompanyId}</if>
+			<if test="readCompanyId != null">and read_company_id = #{readCompanyId}</if>
 			<if test="createTime != null and createTime !=''">and create_time = #{createTime}</if>
 		</where>
 	</sql>
@@ -68,7 +68,7 @@
         #{infoId},
         #{publishCompanyId},
         #{readCompanyId},
-        #{createTime}
+        NOW()
 		)
     </insert>  
       

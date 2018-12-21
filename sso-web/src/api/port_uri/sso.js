@@ -53,3 +53,9 @@ export const companyReader="company/reader"
 export const infoQuery = "info/query"
 //阅读者获取授权信息详情
 export const infoDetail = "info/detail"
+//阅读者导出授权信息
+export const infoExport = "info/export"
+//发布者-阅读日志
+export const readlogPublish = "readlog/publish"
+//阅读者-阅读日志
+export const readlogRead = "readlog/read"

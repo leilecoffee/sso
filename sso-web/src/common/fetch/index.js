@@ -36,9 +36,28 @@ export default function fetch(options) {
 				'X-Powered-By': 'zzmhot'
 			}
 		})
-		//请求处理
-		instance(options)
-			.then(({data: {code,msg,data}}) => {
+		//请求拦截器
+		instance.interceptors.response.use(function(response) {
+			//处理导出下载功能
+			if(response.headers['content-disposition']){
+				console.log(response.headers['content-disposition']);
+				let fileName = response.headers['content-disposition'].split('=')[1];
+				fileName = fileName.replace(/\"/g, "");
+				var url = window.URL.createObjectURL(new Blob([response.data]));
+				var a = document.createElement('a'); 
+				a.href = url; 
+				a.download = decodeURIComponent(fileName); 
+				document.body.appendChild(a);
+				a.click();
+				setTimeout(function(){
+					document.body.removeChild(a);
+					window.URL.revokeObjectURL(url);
+				},1000);
+			}
+			return response
+		})
+			
+		instance(options).then(({data: {code,msg,data}}) => {
 				//请求成功时,根据业务判断状态
 				if (code === port_code.success) {
 					resolve({code,msg,data})

@@ -14,12 +14,14 @@ import cn.mcsj.sso.constant.GlobalConstant;
 import cn.mcsj.sso.constant.ResultCode;
 import cn.mcsj.sso.dao.CompanyDao;
 import cn.mcsj.sso.dao.ProductDao;
+import cn.mcsj.sso.dao.ProductTypeDao;
 import cn.mcsj.sso.dao.QuotedDao;
 import cn.mcsj.sso.dto.base.PageBean;
 import cn.mcsj.sso.dto.base.ResultVO;
 import cn.mcsj.sso.dto.req.ReqQuotedSaveBean;
 import cn.mcsj.sso.entity.Company;
 import cn.mcsj.sso.entity.Product;
+import cn.mcsj.sso.entity.ProductType;
 import cn.mcsj.sso.entity.Quoted;
 import cn.mcsj.sso.entity.User;
 import cn.mcsj.sso.service.IQuotedService;
@@ -34,7 +36,8 @@ public class QuotedService implements IQuotedService {
 	private CompanyDao companyDao;
 	@Autowired
 	private ProductDao productDao;
-
+	@Autowired
+	private ProductTypeDao productTypeDao;
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
@@ -84,6 +87,7 @@ public class QuotedService implements IQuotedService {
 	public int save(ReqQuotedSaveBean quotedSaveBean) {
 		User user = ApplicationUtil.getCurrentUser();
 		Quoted quoted = new Quoted();
+		quoted.setUserId(user.getUserId());
 		quoted.setCompanyId(user.getCompanyId());
 		Company company = companyDao.getOne(user.getCompanyId());
 		quoted.setCompanyCode(company.getCode());
@@ -92,6 +96,10 @@ public class QuotedService implements IQuotedService {
 		Product product = productDao.getOne(quotedSaveBean.getProductId());
 		quoted.setProductCode(product.getCode());
 		quoted.setProductName(product.getName());
+		quoted.setProductDesc(product.getDescription());
+		ProductType productType = productTypeDao.getOne(product.getProductTypeId());
+		quoted.setProductTypeId(product.getProductTypeId());
+		quoted.setProductType(productType.getName());
 		quoted.setPrice(quotedSaveBean.getPrice());
 		quoted.setPriceDate(quotedSaveBean.getPriceDate());
 		quoted.setVisitStartTime(quotedSaveBean.getVisitStartTime());
