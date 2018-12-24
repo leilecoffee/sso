@@ -1,5 +1,6 @@
 <template>
   <div class="header-section">
+		<img src="~assets/images/logo.jpg" class="logo">
     <menu-right></menu-right>
   </div>
 </template>

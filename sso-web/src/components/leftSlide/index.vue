@@ -1,11 +1,14 @@
 <template>
   <div class="left-side">
     <div class="left-side-inner">
-      <router-link to="/" class="logo block">
-        <img src="./images/logo.png">
-      </router-link>
-      <el-menu class="menu-box" theme="dark" router :default-active="$route.path">
-        <div v-for="(item, index) in nav_menu_data" :key="index">
+			<div class="left-header">
+					<img src="~assets/images/left_header_log.jpg" class="logo"><br/>
+					<span class="title">渤海银行深圳分行</span><br>
+					<span>张国立</span><br>
+					<span>2018-12-24 14:00</span>
+			</div>
+      <el-menu class="menu-box" theme="dark" router :default-active="$route.path" :collapse-transition="false">
+        <div class="menu" v-for="(item, index) in nav_menu_data" :key="index">
           <el-menu-item
             class="menu-list"
             v-if="typeof item.child === 'undefined'"
