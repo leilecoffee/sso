@@ -3,3 +3,6 @@
 /sso-server/target
 /sso-server/.settings
 /sso-web/package-lock.json
+/website/node_modules
+/website/package-lock.json
+/website/public/lib

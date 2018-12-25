@@ -1,0 +1,22 @@
+{
+  "name": "website",
+  "description": "",
+  "main": "",
+  "authors": [
+    "leilecoffee <xwm1009@126.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/leilecoffee/sso",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^1.12.4",
+		"popper":"https://github.com/FezVrasta/popper.js.git#1.14.6"
+  }
+}
