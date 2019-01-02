@@ -121,6 +121,7 @@
     }
 }
 .main-content {
+	
     position: relative;
     margin-left: 230px;
     background-color: rgb(238, 243, 247);
@@ -135,6 +136,7 @@
         background-color: rgb(238, 243, 247);
     }
     .panel {
+		overflow-y: auto;
         top: 70px;
         bottom: 30px;
         left: 250px;
