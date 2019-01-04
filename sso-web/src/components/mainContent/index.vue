@@ -20,7 +20,7 @@
 	import vFooter from './footer'
 
   export default{
-    name: 'content',
+    name: 'mainContent',
     components: {
 			vFooter
     }

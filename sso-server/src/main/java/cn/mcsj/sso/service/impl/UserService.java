@@ -27,6 +27,7 @@ import com.alibaba.fastjson.JSON;
 import cn.mcsj.sso.constant.DeleteEnum;
 import cn.mcsj.sso.constant.GlobalConstant;
 import cn.mcsj.sso.constant.ResultCode;
+import cn.mcsj.sso.dao.CompanyDao;
 import cn.mcsj.sso.dao.UserDao;
 import cn.mcsj.sso.dto.base.PageBean;
 import cn.mcsj.sso.dto.base.ResultVO;
@@ -35,6 +36,7 @@ import cn.mcsj.sso.dto.req.ReqLoginBean;
 import cn.mcsj.sso.dto.req.ReqUserSaveBean;
 import cn.mcsj.sso.dto.req.ReqUserUpdateBean;
 import cn.mcsj.sso.dto.res.ResLoginBean;
+import cn.mcsj.sso.entity.Company;
 import cn.mcsj.sso.entity.User;
 import cn.mcsj.sso.service.IUserService;
 import cn.mcsj.sso.util.ApplicationUtil;
@@ -45,6 +47,8 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private CompanyDao companyDao;
 	@Autowired
 	private SessionDAO sessionDAO;
 
@@ -87,9 +91,15 @@ public class UserService implements IUserService {
 				logger.info("写入当前用户到session中!{}", JSON.toJSONString(user));
 				session.setAttribute(GlobalConstant.SESSION_AUTH_LOGIN_USER, SerializeUtil.serialize(user));
 				userInfo.setName(user.getName());
+				Long companyId = user.getCompanyId();
+				Company company = companyDao.getOne(companyId);
+				userInfo.setCompanyName(company.getName());
 			} else {
 				User user = ApplicationUtil.getCurrentUser();
 				userInfo.setName(user.getName());
+				Long companyId = user.getCompanyId();
+				Company company = companyDao.getOne(companyId);
+				userInfo.setCompanyName(company.getName());
 			}
 			logger.info("登录成功,返回用户信息!{}", JSON.toJSONString(userInfo));
 			return new ResultVO(userInfo);
