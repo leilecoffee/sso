@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/hyperledger/fabric/core/chaincode/shim"
-	sc "github.com/hyperledger/fabric/protos/peer"
+	"github.com/hyperledger/fabric/protos/peer"
 )
 
 type SmartContract struct {
